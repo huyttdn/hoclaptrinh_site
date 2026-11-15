@@ -1,0 +1,16 @@
+{
+  "name": "Northline",
+  "short_name": "Northline",
+  "description": "A senior design and engineering studio for ambitious teams.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f6f2",
+  "theme_color": "#0b1120",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

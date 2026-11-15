@@ -1,5 +1,6 @@
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   Outlet,
@@ -9,6 +10,10 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { LogoMark } from "./components/logo";
+import { SiteFooter } from "./components/site-footer";
+import { SiteHeader } from "./components/site-header";
+import { buttonClass } from "./components/ui";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -19,8 +24,10 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Instrument+Serif:ital@0;1&display=swap",
   },
+  { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+  { rel: "manifest", href: "/site.webmanifest" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -29,6 +36,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#0b1120" />
+        <meta name="color-scheme" content="light" />
         <Meta />
         <Links />
       </head>
@@ -41,20 +50,43 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function HydrateFallback() {
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-paper">
+      <LogoMark className="h-12 w-12 animate-pulse" />
+      <p className="text-sm font-medium text-slate-500">Loading Northline…</p>
+    </div>
+  );
+}
+
 export default function App() {
-  return <Outlet />;
+  return (
+    <div id="top" className="flex min-h-screen flex-col">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Skip to content
+      </a>
+      <SiteHeader />
+      <main id="main-content" className="flex-1">
+        <Outlet />
+      </main>
+      <SiteFooter />
+    </div>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
+  let message = "Something went wrong";
+  let details = "An unexpected error occurred. Please try again.";
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
+    message = error.status === 404 ? "Page not found" : "Something went wrong";
     details =
       error.status === 404
-        ? "The requested page could not be found."
+        ? "The page you are looking for does not exist or has moved."
         : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
@@ -62,14 +94,30 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main className="flex min-h-screen items-center justify-center bg-paper px-6 py-20">
+      <div className="w-full max-w-xl text-center">
+        <LogoMark className="mx-auto h-12 w-12" />
+        <p className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">
+          Northline
+        </p>
+        <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          {message}
+        </h1>
+        <p className="mt-4 text-pretty leading-7 text-slate-600">{details}</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <Link to="/" className={buttonClass("primary", "md")}>
+            Back to home
+          </Link>
+          <Link to="/contact" className={buttonClass("secondary", "md")}>
+            Contact us
+          </Link>
+        </div>
+        {stack ? (
+          <pre className="mt-10 w-full overflow-x-auto rounded-2xl bg-slate-900 p-4 text-left text-xs text-slate-200">
+            <code>{stack}</code>
+          </pre>
+        ) : null}
+      </div>
     </main>
   );
 }

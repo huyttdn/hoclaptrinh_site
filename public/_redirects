@@ -1,0 +1,2 @@
+# Serve the pre-rendered pages first, then hydrate unknown routes through the SPA fallback.
+/*    /__spa-fallback.html    200
