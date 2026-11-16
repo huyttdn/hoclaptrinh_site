@@ -25,7 +25,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Instrument+Serif:ital@0;1&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap",
   },
   { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
   { rel: "manifest", href: "/site.webmanifest" },
@@ -110,7 +110,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
           <Link to="/" className={buttonClass("primary", "md")}>
             Về trang chủ
           </Link>
-          <Link to="/dang-ky" className={buttonClass("secondary", "md")}>
+          <Link to="/#dang-ky" className={buttonClass("secondary", "md")}>
             Đăng ký học
           </Link>
         </div>

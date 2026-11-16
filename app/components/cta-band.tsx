@@ -6,7 +6,7 @@ export function CtaBand({
   title = "Sẵn sàng bắt đầu học lập trình?",
   description = "Đăng ký để nhận lộ trình học, tài liệu và buổi hướng dẫn dành riêng cho người mới bắt đầu.",
   primaryLabel = "Đăng ký ngay",
-  primaryTo = "/dang-ky",
+  primaryTo = "/#dang-ky",
 }: {
   title?: string;
   description?: string;

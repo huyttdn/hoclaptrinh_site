@@ -1,8 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import Home from "./home";
+
+vi.mock("../lib/supabase", () => ({
+  isSupabaseConfigured: true,
+  getSupabase: () => ({}),
+}));
+
+vi.mock("../lib/registrations", () => ({
+  isValidPhone: (phone: string) => /^0\d{9}$/.test(phone),
+  createRegistration: vi.fn(async () => undefined),
+}));
 
 function renderHome() {
   return render(
@@ -37,9 +47,17 @@ describe("Home route", () => {
         name: /những bước tiến đầu tiên/i,
       }),
     ).toBeInTheDocument();
+  });
+
+  it("places the registration form at the top of the page", () => {
+    renderHome();
+
     expect(
-      screen.getByRole("link", { name: /tìm hiểu tư duy lập trình/i }),
-    ).toHaveAttribute("href", "/lo-trinh#tu-duy-lap-trinh");
+      screen.getByRole("heading", { name: /nhận lộ trình học qua zalo/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /đăng ký ngay/i }),
+    ).toBeInTheDocument();
   });
 
   it("cycles through testimonials", async () => {

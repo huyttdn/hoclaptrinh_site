@@ -103,9 +103,9 @@ Variables** rồi deploy lại.
 
 ## Render tĩnh
 
-`react-router.config.ts` dùng `ssr: false` với danh sách `prerender` cho `/`,
-`/lo-trinh`, `/gioi-thieu`, `/dang-ky`. Trang `/admin` được render phía client
-(vì cần đăng nhập), đi qua `__spa-fallback.html`.
+`react-router.config.ts` dùng `ssr: false` với danh sách `prerender` cho `/`.
+Trang `/admin` được render phía client (vì cần đăng nhập), đi qua
+`__spa-fallback.html`.
 
 ## Deploy
 
@@ -125,7 +125,7 @@ docker run -p 8080:80 hoc-code
 ## Tùy chỉnh nội dung
 
 - **Nội dung và điều hướng:** `app/data/site.ts` — tên thương hiệu, chủ đề học,
-  lộ trình, đội ngũ, đánh giá, câu hỏi thường gặp.
+  đánh giá, thống kê.
 - **Màu sắc, font:** `app/app.css`.
 - **Routes:** `app/routes.ts` và các file trong `app/routes/`.
 - **Thành phần dùng chung:** `app/components/`.
@@ -155,7 +155,7 @@ app/
 │   ├── storage.ts       Tải/xóa ảnh đại diện trên Supabase Storage
 │   ├── export-excel.ts  Xuất file Excel
 │   └── seo.ts           Helper metadata
-├── routes/              Trang chủ, lộ trình, giới thiệu, đăng ký, admin, 404
+├── routes/              Trang chủ (landing + form đăng ký), admin, 404
 ├── test/                Cấu hình Vitest
 ├── app.css              Theme Tailwind và style toàn cục
 ├── root.tsx             Khung tài liệu, header, footer, error boundary

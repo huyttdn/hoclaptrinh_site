@@ -32,8 +32,8 @@ export default function NotFound() {
           <ButtonLink to="/" size="lg">
             Về trang chủ
           </ButtonLink>
-          <ButtonLink to="/lo-trinh" variant="secondary" size="lg">
-            Xem lộ trình
+          <ButtonLink to="/#dang-ky" variant="secondary" size="lg">
+            Đăng ký học
           </ButtonLink>
         </div>
       </Container>

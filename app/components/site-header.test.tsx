@@ -13,13 +13,15 @@ function renderHeader() {
 }
 
 describe("SiteHeader", () => {
-  it("marks the current route as active", () => {
+  it("renders the in-page navigation links", () => {
     renderHeader();
 
-    expect(screen.getByRole("link", { name: "Trang chủ" })).toHaveAttribute(
-      "aria-current",
-      "page",
-    );
+    expect(
+      screen.getByRole("link", { name: "Nội dung học" }),
+    ).toHaveAttribute("href", "/#noi-dung");
+    expect(
+      screen.getByRole("link", { name: "Vì sao chọn" }),
+    ).toHaveAttribute("href", "/#vi-sao");
   });
 
   it("toggles the mobile navigation and closes it with Escape", async () => {

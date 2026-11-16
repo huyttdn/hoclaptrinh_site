@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 import { navLinks } from "../data/site";
 import { ArrowRight, Close, Menu } from "./icons";
 import { Logo } from "./logo";
@@ -48,27 +48,19 @@ export function SiteHeader() {
 
           <nav aria-label="Chính" className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
-              <NavLink
+              <Link
                 key={link.to}
                 to={link.to}
-                end={link.to === "/"}
-                className={({ isActive }) =>
-                  [
-                    "rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500",
-                    isActive
-                      ? "bg-slate-900/[0.06] text-ink"
-                      : "text-slate-600 hover:bg-slate-900/[0.04] hover:text-ink",
-                  ].join(" ")
-                }
+                className="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-900/[0.04] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
               >
                 {link.label}
-              </NavLink>
+              </Link>
             ))}
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
             <Link
-              to="/dang-ky"
+              to="/#dang-ky"
               className={buttonClass("primary", "sm", "group/button")}
             >
               Đăng ký học
@@ -97,24 +89,17 @@ export function SiteHeader() {
         <Container className="py-4">
           <nav aria-label="Di động" className="flex flex-col gap-1">
             {navLinks.map((link) => (
-              <NavLink
+              <Link
                 key={link.to}
                 to={link.to}
-                end={link.to === "/"}
-                className={({ isActive }) =>
-                  [
-                    "rounded-xl px-4 py-3 text-base font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500",
-                    isActive
-                      ? "bg-slate-900/[0.06] text-ink"
-                      : "text-slate-600 hover:bg-slate-900/[0.04] hover:text-ink",
-                  ].join(" ")
-                }
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-4 py-3 text-base font-medium text-slate-600 transition-colors hover:bg-slate-900/[0.04] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
               >
                 {link.label}
-              </NavLink>
+              </Link>
             ))}
             <Link
-              to="/dang-ky"
+              to="/#dang-ky"
               className={buttonClass("primary", "md", "mt-3 w-full")}
               onClick={() => setOpen(false)}
             >

@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { navLinks, site, topics } from "../data/site";
+import { navLinks, site } from "../data/site";
 import { Facebook, Github, Mail, MapPin, Phone, Youtube } from "./icons";
 import { Logo } from "./logo";
 import { NewsletterForm } from "./newsletter-form";
@@ -26,7 +26,7 @@ export function SiteFooter() {
       />
 
       <Container className="relative">
-        <div className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.6fr_0.8fr_0.8fr_1.1fr]">
+        <div className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[1.6fr_0.9fr_1.1fr]">
           <div>
             <Logo tone="light" />
             <p className="mt-5 max-w-sm text-sm leading-6 text-slate-400">
@@ -71,22 +71,14 @@ export function SiteFooter() {
                   </Link>
                 </li>
               ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-sm font-semibold text-white">Chủ đề</h2>
-            <ul className="mt-5 space-y-3">
-              {topics.map((topic) => (
-                <li key={topic.slug}>
-                  <Link
-                    to={`/lo-trinh#${topic.slug}`}
-                    className="text-sm text-slate-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                  >
-                    {topic.title}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link
+                  to="/#dang-ky"
+                  className="text-sm text-slate-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Đăng ký học
+                </Link>
+              </li>
             </ul>
           </div>
 
