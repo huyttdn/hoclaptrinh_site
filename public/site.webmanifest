@@ -1,6 +1,6 @@
 {
-  "name": "Học Code",
-  "short_name": "Học Code",
+  "name": "HọcLậpTrình",
+  "short_name": "HọcLậpTrình",
   "description": "Học lập trình từ con số 0, dành cho người mới bắt đầu.",
   "start_url": "/",
   "display": "standalone",

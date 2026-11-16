@@ -84,7 +84,7 @@ function Hero() {
             theo một lộ trình rõ ràng.
           </h1>
           <p className="mt-6 max-w-xl text-pretty text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
-            Học Code giúp bạn xây nền tảng lập trình vững chắc bằng bài giảng
+            HọcLậpTrình giúp bạn xây nền tảng lập trình vững chắc bằng bài giảng
             tiếng Việt dễ hiểu, bài tập thực hành và các dự án thật — dành cho
             người chưa từng viết một dòng code nào.
           </p>
@@ -228,7 +228,7 @@ function WhyUs() {
       <Container className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
-            eyebrow="Vì sao chọn Học Code"
+            eyebrow="Vì sao chọn HọcLậpTrình"
             title={
               <>
                 Học đúng cách ngay từ{" "}

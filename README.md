@@ -1,4 +1,4 @@
-# Học Code — Website học lập trình cho người mới
+# HọcLậpTrình — Website học lập trình cho người mới
 
 Website giới thiệu và đăng ký học lập trình dành cho người mới bắt đầu, giao
 diện tiếng Việt, responsive. Người dùng điền họ tên và số điện thoại Zalo, dữ

@@ -1,10 +1,10 @@
 export const site = {
-  name: "Học Code",
-  legalName: "Học Code",
+  name: "HọcLậpTrình",
+  legalName: "HọcLậpTrình",
   tagline: "Học lập trình từ con số 0, dành cho người mới bắt đầu.",
   description:
-    "Học Code giúp người mới bắt đầu làm quen với lập trình qua lộ trình rõ ràng, bài giảng tiếng Việt dễ hiểu và nhiều dự án thực hành.",
-  email: "hotro@hoccode.vn",
+    "HọcLậpTrình giúp người mới bắt đầu làm quen với lập trình qua lộ trình rõ ràng, bài giảng tiếng Việt dễ hiểu và nhiều dự án thực hành.",
+  email: "admin@hoclaptrinh.site",
   phone: "0901 234 567",
   phoneHref: "+84901234567",
   address: "Tầng 3, 123 Nguyễn Trãi\nQuận 1, TP. Hồ Chí Minh",
