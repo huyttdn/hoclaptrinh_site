@@ -198,7 +198,7 @@ export function Avatar({
 
 export function Stars({
   count = 5,
-  label = "5 out of 5 stars",
+  label = "5 trên 5 sao",
   className = "",
 }: {
   count?: number;

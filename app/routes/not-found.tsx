@@ -4,8 +4,8 @@ import { pageMeta } from "../lib/seo";
 
 export function meta({}: Route.MetaArgs) {
   return pageMeta({
-    title: "Page not found",
-    description: "The page you are looking for does not exist or has moved.",
+    title: "Không tìm thấy trang",
+    description: "Trang bạn tìm không tồn tại hoặc đã được di chuyển.",
   });
 }
 
@@ -21,19 +21,19 @@ export default function NotFound() {
           404
         </p>
         <h1 className="mt-5 text-balance text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-          This page took a{" "}
-          <span className="font-serif italic text-brand-700">wrong turn</span>.
+          Trang này đã đi{" "}
+          <span className="font-serif italic text-brand-700">lạc đường</span>.
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-pretty text-lg leading-8 text-slate-600">
-          The page you are looking for does not exist, has moved, or is still
-          being built. Let&apos;s get you back to something useful.
+          Trang bạn tìm không tồn tại, đã được di chuyển hoặc đang được xây
+          dựng. Hãy quay lại một nơi hữu ích hơn.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <ButtonLink to="/" size="lg">
-            Back to home
+            Về trang chủ
           </ButtonLink>
-          <ButtonLink to="/services" variant="secondary" size="lg">
-            View services
+          <ButtonLink to="/lo-trinh" variant="secondary" size="lg">
+            Xem lộ trình
           </ButtonLink>
         </div>
       </Container>

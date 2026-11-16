@@ -46,7 +46,7 @@ export function SiteHeader() {
         <div className="flex h-20 items-center justify-between gap-6">
           <Logo />
 
-          <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
+          <nav aria-label="Chính" className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
@@ -68,10 +68,10 @@ export function SiteHeader() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <Link
-              to="/contact"
+              to="/dang-ky"
               className={buttonClass("primary", "sm", "group/button")}
             >
-              Start a project
+              Đăng ký học
               <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/button:translate-x-0.5" />
             </Link>
           </div>
@@ -81,7 +81,7 @@ export function SiteHeader() {
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white/70 text-ink transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-navigation"
-            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            aria-label={open ? "Đóng menu" : "Mở menu"}
             onClick={() => setOpen((value) => !value)}
           >
             {open ? <Close className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -95,7 +95,7 @@ export function SiteHeader() {
         className="border-t border-slate-900/10 bg-paper/95 backdrop-blur-xl lg:hidden"
       >
         <Container className="py-4">
-          <nav aria-label="Mobile" className="flex flex-col gap-1">
+          <nav aria-label="Di động" className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
@@ -114,11 +114,11 @@ export function SiteHeader() {
               </NavLink>
             ))}
             <Link
-              to="/contact"
+              to="/dang-ky"
               className={buttonClass("primary", "md", "mt-3 w-full")}
               onClick={() => setOpen(false)}
             >
-              Start a project
+              Đăng ký học
               <ArrowRight className="h-4 w-4" />
             </Link>
           </nav>

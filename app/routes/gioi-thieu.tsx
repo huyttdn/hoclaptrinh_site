@@ -1,4 +1,4 @@
-import type { Route } from "./+types/about";
+import type { Route } from "./+types/gioi-thieu";
 import { CtaBand } from "../components/cta-band";
 import { Compass, Heart, Layers, Mail } from "../components/icons";
 import {
@@ -13,9 +13,9 @@ import { pageMeta } from "../lib/seo";
 
 export function meta({}: Route.MetaArgs) {
   return pageMeta({
-    title: "About",
+    title: "Giới thiệu",
     description:
-      "Northline is a small, senior design and engineering studio in San Francisco. Meet the team and the principles behind the work.",
+      "Học Code là nền tảng học lập trình cho người mới bắt đầu, với lộ trình rõ ràng, bài giảng tiếng Việt và đội ngũ giảng viên tận tâm.",
   });
 }
 
@@ -25,27 +25,25 @@ const valueIcons = {
   heart: Heart,
 } as const;
 
-export default function About() {
+export default function GioiThieu() {
   return (
     <>
       <PageHero
-        eyebrow="About Northline"
+        eyebrow="Giới thiệu"
         title={
           <>
-            A small studio with a simple belief:{" "}
-            <span className="font-serif italic text-brand-700">
-              clarity wins
-            </span>
+            Chúng tôi giúp người mới bắt đầu{" "}
+            <span className="font-serif italic text-brand-700">đúng cách</span>
             .
           </>
         }
-        description="We are designers, strategists, and engineers who like difficult problems and dislike unnecessary complexity. For over a decade we have helped ambitious teams turn good ideas into clear, useful digital products."
+        description="Học Code được tạo ra bởi những người từng chật vật khi tự học lập trình. Chúng tôi gom lại mọi thứ người mới cần — và bỏ đi những thứ chỉ khiến bạn rối."
       >
-        <ButtonLink to="/contact" size="lg">
-          Work with us
+        <ButtonLink to="/dang-ky" size="lg">
+          Đăng ký học
         </ButtonLink>
-        <ButtonLink to="/services" variant="secondary" size="lg">
-          See our services
+        <ButtonLink to="/lo-trinh" variant="secondary" size="lg">
+          Xem lộ trình
         </ButtonLink>
       </PageHero>
 
@@ -54,9 +52,9 @@ export default function About() {
       <TeamSection />
 
       <CtaBand
-        title="We would love to hear what you are working on."
-        description="Whether the idea is early or the redesign is overdue, a short conversation is usually the fastest way to find out if we are a good fit."
-        primaryLabel="Say hello"
+        title="Chúng tôi rất vui được đồng hành cùng bạn."
+        description="Dù bạn mới bắt đầu hay đang tìm cách học lại từ đầu, một buổi trò chuyện ngắn thường là điểm khởi đầu tốt nhất."
+        primaryLabel="Đăng ký ngay"
       />
     </>
   );
@@ -69,25 +67,24 @@ function StorySection() {
         <div className="grid gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
           <div>
             <SectionHeading
-              eyebrow="Our story"
-              title="Built to keep good ideas intact."
+              eyebrow="Câu chuyện"
+              title="Bắt đầu từ một chỗ học tử tế."
             />
             <div className="mt-6 space-y-4 text-base leading-7 text-slate-600">
               <p>
-                Northline started in 2014 with a simple frustration: the best
-                ideas were getting lost between strategy, design, and
-                engineering. Each team was talented. The handoffs were not.
+                Học Code ra đời năm 2020 với một điều đơn giản: người mới học
+                lập trình cần một lộ trình rõ ràng và một người đồng hành kiên
+                nhẫn. Quá nhiều tài liệu rời rạc khiến việc học trở nên đáng sợ.
               </p>
               <p>
-                So we built a studio where those disciplines sit at the same
-                table from day one. Today we are a team of four senior
-                practitioners, working with a small number of clients at a
-                time, on work that matters to them.
+                Vì vậy chúng tôi xây dựng nền tảng này theo hướng ngược lại —
+                ít hơn nhưng chắc hơn. Mỗi bài giảng chỉ dạy một điều, kèm bài
+                tập và dự án để bạn hiểu bằng cách làm.
               </p>
               <p>
-                We are deliberately independent and deliberately small. That
-                means the person you meet is the person doing the work, and the
-                decisions stay close to the detail.
+                Chúng tôi giữ nội dung hoàn toàn bằng tiếng Việt, giải thích mọi
+                thuật ngữ từ đầu, để bạn không phải vừa học lập trình vừa học
+                một ngôn ngữ mới.
               </p>
             </div>
 
@@ -116,21 +113,21 @@ function StorySection() {
               />
               <div className="relative">
                 <p className="font-serif text-2xl italic leading-snug text-ink sm:text-3xl">
-                  “We are not trying to be the biggest studio. We are trying to
-                  be the one you call when the problem actually matters.”
+                  “Chúng tôi không cố dạy thật nhiều. Chúng tôi cố dạy thật rõ,
+                  để bạn không bao giờ cảm thấy lạc lõng.”
                 </p>
                 <div className="mt-7 flex items-center gap-3">
                   <Avatar
-                    initials="AM"
+                    initials="QB"
                     accent="from-brand-500 to-cyan-400"
                     size="md"
                   />
                   <div>
                     <p className="text-sm font-semibold text-ink">
-                      Alex Morgan
+                      Trần Quốc Bảo
                     </p>
                     <p className="text-sm text-slate-500">
-                      Founder & Creative Director
+                      Người sáng lập & Giảng viên chính
                     </p>
                   </div>
                 </div>
@@ -140,16 +137,18 @@ function StorySection() {
             <div className="mt-5 grid grid-cols-2 gap-4">
               <div className="rounded-2xl border border-slate-200 bg-white p-5">
                 <p className="text-2xl font-semibold tracking-tight text-ink">
-                  2014
+                  2020
                 </p>
-                <p className="mt-1 text-xs text-slate-500">Studio founded</p>
+                <p className="mt-1 text-xs text-slate-500">
+                  Nền tảng được thành lập
+                </p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white p-5">
                 <p className="text-2xl font-semibold tracking-tight text-ink">
                   4
                 </p>
                 <p className="mt-1 text-xs text-slate-500">
-                  Senior practitioners
+                  Giảng viên & cố vấn
                 </p>
               </div>
             </div>
@@ -165,9 +164,9 @@ function ValuesSection() {
     <section className="border-y border-slate-900/5 bg-white py-20 sm:py-28">
       <Container>
         <SectionHeading
-          eyebrow="What we believe"
-          title="Three principles we keep coming back to."
-          description="They shape how we scope work, how we run projects, and how we make decisions when there is no obvious right answer."
+          eyebrow="Điều chúng tôi theo đuổi"
+          title="Ba nguyên tắc trong mọi bài giảng."
+          description="Chúng định hình cách chúng tôi viết nội dung, đặt bài tập và phản hồi cho học viên."
         />
 
         <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -203,14 +202,13 @@ function TeamSection() {
       <Container>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
-            eyebrow="The team"
-            title="Senior people, close to the work."
-            description="No account managers, no handoffs, no juniors learning on your budget. You work directly with the people making the decisions."
+            eyebrow="Đội ngũ"
+            title="Người đồng hành cùng bạn."
+            description="Chúng tôi là những người đã từng bắt đầu từ số 0. Bạn sẽ học với giảng viên trực tiếp viết bài giảng, không qua trung gian."
           />
           <p className="max-w-sm text-sm leading-6 text-slate-600">
-            We keep the team intentionally small so we can stay hands-on. For
-            larger builds, we bring in a trusted network of specialists we have
-            worked with for years.
+            Đội ngũ được giữ nhỏ để mỗi học viên đều nhận được sự quan tâm. Khi
+            cần, chúng tôi mời thêm cộng tác viên đã gắn bó nhiều năm.
           </p>
         </div>
 
@@ -237,10 +235,10 @@ function TeamSection() {
               <a
                 href={`mailto:${site.email}`}
                 className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
-                aria-label={`Email Northline about ${member.name}`}
+                aria-label={`Gửi email cho ${member.name}`}
               >
                 <Mail className="h-4 w-4" />
-                Get in touch
+                Liên hệ
               </a>
             </article>
           ))}

@@ -1,4 +1,10 @@
-import { Check, Sparkles, TrendingUp } from "./icons";
+import { Check, GraduationCap, Sparkles } from "./icons";
+
+const codeLines = [
+  { text: "# Bài 1: Chương trình đầu tiên", tone: "text-slate-500" },
+  { text: 'ten = "Minh Anh"', tone: "text-sky-300" },
+  { text: 'print("Xin chào,", ten)', tone: "text-emerald-300" },
+];
 
 export function HeroVisual() {
   return (
@@ -17,7 +23,7 @@ export function HeroVisual() {
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
             </div>
             <div className="ml-1 flex-1 rounded-full bg-white/5 px-3 py-1 text-[10px] font-medium tracking-wide text-slate-400">
-              northline.studio / client-portal
+              hoccode.vn / bai-hoc-dau-tien.py
             </div>
             <Sparkles className="h-3.5 w-3.5 text-brand-300" />
           </div>
@@ -30,32 +36,25 @@ export function HeroVisual() {
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-300">
-                    Launch overview
+                    Bài học hôm nay
                   </p>
                   <p className="mt-2 max-w-[15rem] text-lg font-semibold leading-tight text-white sm:text-xl">
-                    A clearer way to launch your next product.
+                    Chương trình Python đầu tiên của bạn.
                   </p>
                 </div>
                 <span className="hidden shrink-0 items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-2.5 py-1 text-[10px] font-semibold text-emerald-300 sm:inline-flex">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  On track
+                  Đang học
                 </span>
               </div>
 
-              <div className="mt-5 grid grid-cols-3 gap-2">
-                {[
-                  ["Visitors", "24.8k"],
-                  ["Conversion", "6.4%"],
-                  ["NPS", "72"],
-                ].map(([label, value]) => (
-                  <div
-                    key={label}
-                    className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5"
-                  >
-                    <p className="text-[9px] font-medium uppercase tracking-wider text-slate-400">
-                      {label}
-                    </p>
-                    <p className="mt-1 text-sm font-semibold text-white">{value}</p>
+              <div className="mt-5 rounded-xl border border-white/10 bg-[#0d1526] p-4 font-mono text-[12px] leading-6 sm:text-[13px]">
+                {codeLines.map((line, index) => (
+                  <div key={line.text} className="flex gap-3">
+                    <span className="w-3 shrink-0 select-none text-right text-slate-600">
+                      {index + 1}
+                    </span>
+                    <span className={line.tone}>{line.text}</span>
                   </div>
                 ))}
               </div>
@@ -63,51 +62,33 @@ export function HeroVisual() {
               <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.04] p-3.5">
                 <div className="flex items-center justify-between">
                   <p className="text-[10px] font-medium text-slate-400">
-                    Weekly growth
+                    Kết quả chạy chương trình
                   </p>
                   <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-300">
-                    <TrendingUp className="h-3 w-3" />
-                    +18.2%
+                    <Check className="h-3 w-3" />
+                    Thành công
                   </span>
                 </div>
-                <svg
-                  viewBox="0 0 240 64"
-                  className="mt-2 h-16 w-full"
-                  preserveAspectRatio="none"
-                >
-                  <defs>
-                    <linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#4aa8ff" stopOpacity="0.35" />
-                      <stop offset="100%" stopColor="#4aa8ff" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  <path
-                    d="M0 52 C20 48 30 40 48 42 S75 30 92 33 120 22 138 25 168 14 186 18 220 6 240 9 V64 H0 Z"
-                    fill="url(#chart-fill)"
-                  />
-                  <path
-                    d="M0 52 C20 48 30 40 48 42 S75 30 92 33 120 22 138 25 168 14 186 18 220 6 240 9"
-                    fill="none"
-                    stroke="#84c6ff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
+                <p className="mt-2 font-mono text-[12px] text-emerald-300">
+                  Xin chào, Minh Anh
+                </p>
               </div>
 
               <div className="mt-3 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-400/15 text-emerald-300">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-400/15 text-brand-300">
                   <Check className="h-3.5 w-3.5" />
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[10px] font-medium text-white">
-                    Design system handover
+                    Lộ trình cơ bản
                   </p>
                   <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/10">
-                    <div className="h-full w-4/5 rounded-full bg-gradient-to-r from-brand-400 to-cyan-300" />
+                    <div className="h-full w-1/4 rounded-full bg-gradient-to-r from-brand-400 to-cyan-300" />
                   </div>
                 </div>
-                <span className="text-[9px] font-semibold text-slate-400">80%</span>
+                <span className="text-[9px] font-semibold text-slate-400">
+                  12/120
+                </span>
               </div>
             </div>
           </div>
@@ -116,22 +97,24 @@ export function HeroVisual() {
 
       <div className="absolute -left-3 top-[18%] rounded-2xl border border-white/80 bg-white/95 px-4 py-3 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.4)] backdrop-blur animate-float sm:-left-8">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-          Discovery to launch
+          Không cần kinh nghiệm
         </p>
-        <p className="mt-1 text-lg font-semibold tracking-tight text-ink">6 weeks</p>
+        <p className="mt-1 text-lg font-semibold tracking-tight text-ink">
+          Bắt đầu từ số 0
+        </p>
       </div>
 
       <div className="absolute -right-2 bottom-[12%] rounded-2xl border border-white/80 bg-white/95 px-4 py-3 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.4)] backdrop-blur animate-float-delayed sm:-right-6">
         <div className="flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
-            <TrendingUp className="h-4 w-4" />
+            <GraduationCap className="h-4 w-4" />
           </span>
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-              Lighthouse
+              Học viên
             </p>
             <p className="text-lg font-semibold leading-none tracking-tight text-ink">
-              98<span className="text-xs font-medium text-slate-400">/100</span>
+              5.000<span className="text-xs font-medium text-slate-400">+</span>
             </p>
           </div>
         </div>

@@ -14,6 +14,7 @@ import { LogoMark } from "./components/logo";
 import { SiteFooter } from "./components/site-footer";
 import { SiteHeader } from "./components/site-header";
 import { buttonClass } from "./components/ui";
+import { site } from "./data/site";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -32,7 +33,7 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="vi">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,7 +55,7 @@ export function HydrateFallback() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-paper">
       <LogoMark className="h-12 w-12 animate-pulse" />
-      <p className="text-sm font-medium text-slate-500">Loading Northline…</p>
+      <p className="text-sm font-medium text-slate-500">Đang tải…</p>
     </div>
   );
 }
@@ -66,7 +67,7 @@ export default function App() {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
       >
-        Skip to content
+        Chuyển đến nội dung
       </a>
       <SiteHeader />
       <main id="main-content" className="flex-1">
@@ -78,15 +79,16 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Something went wrong";
-  let details = "An unexpected error occurred. Please try again.";
+  let message = "Đã xảy ra lỗi";
+  let details = "Có lỗi không mong muốn. Vui lòng thử lại.";
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "Page not found" : "Something went wrong";
+    message =
+      error.status === 404 ? "Không tìm thấy trang" : "Đã xảy ra lỗi";
     details =
       error.status === 404
-        ? "The page you are looking for does not exist or has moved."
+        ? "Trang bạn tìm không tồn tại hoặc đã được di chuyển."
         : error.statusText || details;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
@@ -98,7 +100,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       <div className="w-full max-w-xl text-center">
         <LogoMark className="mx-auto h-12 w-12" />
         <p className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">
-          Northline
+          {site.name}
         </p>
         <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
           {message}
@@ -106,10 +108,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
         <p className="mt-4 text-pretty leading-7 text-slate-600">{details}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link to="/" className={buttonClass("primary", "md")}>
-            Back to home
+            Về trang chủ
           </Link>
-          <Link to="/contact" className={buttonClass("secondary", "md")}>
-            Contact us
+          <Link to="/dang-ky" className={buttonClass("secondary", "md")}>
+            Đăng ký học
           </Link>
         </div>
         {stack ? (

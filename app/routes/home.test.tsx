@@ -19,38 +19,44 @@ describe("Home route", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /digital products that make complex ideas feel/i,
+        name: /học lập trình từ con số 0/i,
       }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
-        name: /one team from first idea to final launch/i,
+        name: /sáu chủ đề đưa bạn từ số 0/i,
       }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
-        name: /senior attention, without the agency theatre/i,
+        name: /học đúng cách ngay từ/i,
       }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
-        name: /good work\. better partnerships/i,
+        name: /những bước tiến đầu tiên/i,
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /explore brand & strategy/i }),
-    ).toHaveAttribute("href", "/services#brand-strategy");
+      screen.getByRole("link", { name: /tìm hiểu tư duy lập trình/i }),
+    ).toHaveAttribute("href", "/lo-trinh#tu-duy-lap-trinh");
   });
 
   it("cycles through testimonials", async () => {
     const user = userEvent.setup();
     renderHome();
 
-    expect(screen.getByText(/turn a vague idea/i)).toBeInTheDocument();
+    expect(screen.getByText(/mình chưa từng viết code/i)).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: /next testimonial/i }));
+    await user.click(
+      screen.getByRole("button", { name: /đánh giá tiếp theo/i }),
+    );
 
-    expect(screen.getByText(/our new site is faster/i)).toBeInTheDocument();
-    expect(screen.queryByText(/turn a vague idea/i)).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/cách giải thích rất dễ hiểu/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(/mình chưa từng viết code/i),
+    ).not.toBeInTheDocument();
   });
 });

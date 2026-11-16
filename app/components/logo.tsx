@@ -20,10 +20,26 @@ export function LogoMark({ className = "" }: { className?: string }) {
       </defs>
       <rect width="32" height="32" rx="9" fill={`url(#${gradientId})`} />
       <path
-        d="M9 23V9l14 14V9"
+        d="M12.5 11 8.5 16l4 5"
         fill="none"
         stroke="white"
-        strokeWidth="2.6"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M19.5 11l4 5-4 5"
+        fill="none"
+        stroke="white"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17.5 9.5 14.5 22.5"
+        fill="none"
+        stroke="white"
+        strokeWidth="2.4"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -41,7 +57,7 @@ export function Logo({
   return (
     <Link
       to="/"
-      aria-label={`${site.name} home`}
+      aria-label={`${site.name} - trang chủ`}
       className={`group inline-flex items-center gap-2.5 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-500 ${className}`}
     >
       <LogoMark className="h-8 w-8 transition-transform duration-300 group-hover:-rotate-6" />

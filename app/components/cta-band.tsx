@@ -3,10 +3,10 @@ import { ArrowUpRight } from "./icons";
 import { ButtonLink, Container, Eyebrow } from "./ui";
 
 export function CtaBand({
-  title = "Have a project in mind? Let's make it clear.",
-  description = "Tell us what you are building and where you are stuck. We will reply with an honest view of how we can help.",
-  primaryLabel = "Start a project",
-  primaryTo = "/contact",
+  title = "Sẵn sàng bắt đầu học lập trình?",
+  description = "Đăng ký để nhận lộ trình học, tài liệu và buổi hướng dẫn dành riêng cho người mới bắt đầu.",
+  primaryLabel = "Đăng ký ngay",
+  primaryTo = "/dang-ky",
 }: {
   title?: string;
   description?: string;
@@ -26,7 +26,7 @@ export function CtaBand({
             className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:52px_52px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]"
           />
           <div className="relative mx-auto flex max-w-3xl flex-col items-center">
-            <Eyebrow tone="dark">Next step</Eyebrow>
+            <Eyebrow tone="dark">Bước tiếp theo</Eyebrow>
             <h2 className="mt-5 text-balance text-3xl font-semibold leading-[1.1] tracking-tight text-white sm:text-4xl lg:text-5xl">
               {title}
             </h2>

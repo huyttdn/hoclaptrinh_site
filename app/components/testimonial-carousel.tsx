@@ -59,7 +59,7 @@ export function TestimonialCarousel() {
               <button
                 type="button"
                 onClick={() => go(-1)}
-                aria-label="Previous testimonial"
+                aria-label="Đánh giá trước"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -67,7 +67,7 @@ export function TestimonialCarousel() {
               <button
                 type="button"
                 onClick={() => go(1)}
-                aria-label="Next testimonial"
+                aria-label="Đánh giá tiếp theo"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
               >
                 <ChevronRight className="h-4 w-4" />

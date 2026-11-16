@@ -1,33 +1,37 @@
 export const site = {
-  name: "Northline",
-  legalName: "Northline Studio LLC",
-  tagline: "A senior design and engineering studio for ambitious teams.",
+  name: "Học Code",
+  legalName: "Học Code",
+  tagline: "Học lập trình từ con số 0, dành cho người mới bắt đầu.",
   description:
-    "Northline is an independent digital studio helping ambitious teams shape, build, and launch websites and products that are clear, fast, and built to last.",
-  email: "hello@northline.studio",
-  phone: "+1 (415) 555-0142",
-  phoneHref: "+14155550142",
-  address: "1200 Market Street, Suite 500\nSan Francisco, CA 94103",
-  hours: "Monday–Friday, 9am–6pm PT",
-  responseTime: "We reply within one business day.",
+    "Học Code giúp người mới bắt đầu làm quen với lập trình qua lộ trình rõ ràng, bài giảng tiếng Việt dễ hiểu và nhiều dự án thực hành.",
+  email: "hotro@hoccode.vn",
+  phone: "0901 234 567",
+  phoneHref: "+84901234567",
+  address: "Tầng 3, 123 Nguyễn Trãi\nQuận 1, TP. Hồ Chí Minh",
+  hours: "Thứ 2 – Thứ 7, 8:00 – 21:00",
   socials: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/", icon: "linkedin" },
-    { label: "X", href: "https://x.com/", icon: "x" },
-    { label: "Dribbble", href: "https://dribbble.com/", icon: "dribbble" },
-    { label: "Instagram", href: "https://www.instagram.com/", icon: "instagram" },
+    { label: "Facebook", href: "https://www.facebook.com/", icon: "facebook" },
+    { label: "YouTube", href: "https://www.youtube.com/", icon: "youtube" },
+    { label: "GitHub", href: "https://github.com/", icon: "github" },
   ],
 } as const;
 
 export const navLinks = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/services" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
+  { label: "Trang chủ", to: "/" },
+  { label: "Lộ trình", to: "/lo-trinh" },
+  { label: "Giới thiệu", to: "/gioi-thieu" },
+  { label: "Đăng ký", to: "/dang-ky" },
 ] as const;
 
-export type ServiceIcon = "strategy" | "design" | "engineering" | "growth";
+export type TopicIcon =
+  | "thinking"
+  | "language"
+  | "data"
+  | "web"
+  | "database"
+  | "project";
 
-export type Service = {
+export type Topic = {
   slug: string;
   number: string;
   title: string;
@@ -35,104 +39,166 @@ export type Service = {
   summary: string;
   description: string;
   features: string[];
-  deliverables: string[];
+  outcomes: string[];
   bestFor: string;
-  icon: ServiceIcon;
+  icon: TopicIcon;
 };
 
-export const services: Service[] = [
+export const topics: Topic[] = [
   {
-    slug: "brand-strategy",
+    slug: "tu-duy-lap-trinh",
     number: "01",
-    title: "Brand & Strategy",
-    tagline: "Find the clearest version of your story.",
+    title: "Tư duy lập trình",
+    tagline: "Hiểu cách máy tính “suy nghĩ” trước khi viết dòng code đầu tiên.",
     summary:
-      "Positioning, messaging, and identity work that gives your team a shared direction before a single screen is designed.",
+      "Làm quen với khái niệm thuật toán, cách chia nhỏ vấn đề và tư duy logic — nền móng cho mọi ngôn ngữ lập trình.",
     description:
-      "Good products start with a sharp point of view. We help you understand what makes your offer distinct, who it is for, and how to explain it without jargon. The result is a practical brand foundation your whole team can use.",
+      "Bạn sẽ hiểu lập trình thực chất là gì, một chương trình chạy như thế nào, và cách biến một bài toán lớn thành các bước nhỏ rõ ràng. Đây là phần quan trọng nhất mà người mới thường bỏ qua.",
     features: [
-      "Stakeholder interviews and market review",
-      "Positioning and messaging framework",
-      "Visual identity and art direction",
-      "Brand guidelines your team can apply",
+      "Lập trình là gì và máy tính hiểu gì",
+      "Thuật toán và sơ đồ khối",
+      "Chia nhỏ vấn đề (decomposition)",
+      "Tư duy logic và gỡ lỗi cơ bản",
     ],
-    deliverables: ["Brand platform", "Messaging kit", "Visual identity", "Guidelines"],
-    bestFor: "Teams launching something new or repositioning an existing offer.",
-    icon: "strategy",
+    outcomes: [
+      "Hiểu bản chất của lập trình",
+      "Biết cách phân tích một đề bài",
+      "Sẵn sàng học ngôn ngữ đầu tiên",
+    ],
+    bestFor: "Người chưa từng viết code và muốn bắt đầu đúng cách.",
+    icon: "thinking",
   },
   {
-    slug: "product-design",
+    slug: "ngon-ngu-dau-tien",
     number: "02",
-    title: "Product Design",
-    tagline: "Turn complexity into a product people understand.",
+    title: "Ngôn ngữ đầu tiên",
+    tagline: "Chọn đúng ngôn ngữ và viết những chương trình đầu tiên.",
     summary:
-      "Research-led UX and interface design for websites, dashboards, and digital products that need to feel effortless.",
+      "So sánh Python và JavaScript cho người mới, sau đó thực hành biến, kiểu dữ liệu, nhập xuất và câu lệnh điều kiện.",
     description:
-      "We work from real user needs, not assumptions. From early flows to polished interfaces, we design systems that are accessible, consistent, and ready for engineering. Every decision is documented so the work survives handoff.",
+      "Chúng ta cùng so sánh hai ngôn ngữ thân thiện nhất với người mới, cài đặt môi trường và viết những chương trình chạy được ngay. Bạn sẽ nắm cú pháp cơ bản mà không bị choáng ngợp.",
     features: [
-      "Discovery workshops and user research",
-      "Information architecture and user flows",
-      "UI design and interactive prototypes",
-      "Design systems and component libraries",
+      "Nên bắt đầu với Python hay JavaScript?",
+      "Cài đặt môi trường và chạy chương trình đầu tiên",
+      "Biến, kiểu dữ liệu và toán tử",
+      "Câu lệnh điều kiện và vòng lặp",
     ],
-    deliverables: ["Research summary", "UX flows", "High-fidelity UI", "Design system"],
-    bestFor: "Teams with a product idea, a redesign, or a growing design backlog.",
-    icon: "design",
+    outcomes: [
+      "Chạy được chương trình đầu tiên",
+      "Nắm cú pháp cơ bản của một ngôn ngữ",
+      "Biết tự tìm và sửa lỗi đơn giản",
+    ],
+    bestFor: "Người đã hiểu tư duy lập trình và muốn viết code thật.",
+    icon: "language",
   },
   {
-    slug: "web-development",
+    slug: "cau-truc-du-lieu",
     number: "03",
-    title: "Web Development",
-    tagline: "Fast, accessible builds without the technical debt.",
+    title: "Cấu trúc dữ liệu & giải thuật",
+    tagline: "Lưu trữ và xử lý dữ liệu một cách thông minh.",
     summary:
-      "React and TypeScript engineering for marketing sites and product interfaces — performant, accessible, and easy to maintain.",
+      "Mảng, danh sách, từ điển và các giải thuật sắp xếp, tìm kiếm cơ bản — kỹ năng cốt lõi khi làm việc và phỏng vấn.",
     description:
-      "We build the front end we would want to inherit: typed, tested, documented, and light on dependencies. Our team handles everything from design systems and CMS integration to performance budgets and launch support.",
+      "Dữ liệu được tổ chức tốt sẽ giúp chương trình chạy nhanh và dễ bảo trì. Bạn sẽ học cách chọn cấu trúc dữ liệu phù hợp và viết những giải thuật đầu tiên một cách tự tin.",
     features: [
-      "React, TypeScript, and modern CSS",
-      "CMS and marketing tool integrations",
-      "Performance and accessibility audits",
-      "Documentation and team handover",
+      "Mảng và danh sách liên kết",
+      "Từ điển và tập hợp (map, set)",
+      "Thuật toán sắp xếp và tìm kiếm",
+      "Độ phức tạp thuật toán (Big-O) nhập môn",
     ],
-    deliverables: ["Production build", "Component library", "CMS setup", "Launch support"],
-    bestFor: "Teams who need a dependable build partner or a fresh start.",
-    icon: "engineering",
+    outcomes: [
+      "Chọn đúng cấu trúc dữ liệu cho bài toán",
+      "Viết hàm xử lý dữ liệu gọn gàng",
+      "Hiểu độ phức tạp cơ bản của thuật toán",
+    ],
+    bestFor: "Người muốn nền tảng vững để học nâng cao hoặc phỏng vấn.",
+    icon: "data",
   },
   {
-    slug: "growth-optimization",
+    slug: "lap-trinh-web",
     number: "04",
-    title: "Growth & Optimization",
-    tagline: "Keep improving after launch.",
+    title: "Lập trình web cơ bản",
+    tagline: "Tự tay xây dựng trang web đầu tiên của bạn.",
     summary:
-      "Measurement, experimentation, and iterative improvements that help your digital experience earn its keep.",
+      "HTML, CSS và JavaScript từ con số 0 đến một trang web hoàn chỉnh, có tương tác và hiển thị tốt trên điện thoại.",
     description:
-      "Launch is a starting point. We help you define the right signals, identify friction, and run focused experiments that improve conversion and retention without adding noise. Small, evidence-led changes compound over time.",
+      "Đây là phần mang lại cảm giác thành tựu nhanh nhất. Bạn sẽ thấy kết quả ngay trên trình duyệt khi ghép HTML, CSS và JavaScript thành một trang web thật, rồi đưa nó lên internet.",
     features: [
-      "Analytics and event tracking setup",
-      "Conversion and usability reviews",
-      "A/B testing and experiment design",
-      "Quarterly optimization roadmaps",
+      "HTML — cấu trúc của trang web",
+      "CSS — giao diện và responsive",
+      "JavaScript — tương tác với người dùng",
+      "Đưa trang web lên internet",
     ],
-    deliverables: ["Measurement plan", "Audit report", "Experiment backlog", "Roadmap"],
-    bestFor: "Teams with a live product who want a clearer path to growth.",
-    icon: "growth",
+    outcomes: [
+      "Một trang web cá nhân hoàn chỉnh",
+      "Hiểu cách trình duyệt hiển thị trang",
+      "Biết cách đưa sản phẩm lên mạng",
+    ],
+    bestFor: "Người muốn thấy kết quả trực quan và nhanh chóng.",
+    icon: "web",
+  },
+  {
+    slug: "co-so-du-lieu",
+    number: "05",
+    title: "Cơ sở dữ liệu",
+    tagline: "Cho ứng dụng của bạn biết ghi nhớ.",
+    summary:
+      "Hiểu cơ sở dữ liệu quan hệ, viết truy vấn SQL và kết nối dữ liệu vào ứng dụng của bạn.",
+    description:
+      "Hầu hết ứng dụng đều cần lưu dữ liệu. Bạn sẽ học cách thiết kế bảng, viết truy vấn SQL và hiểu luồng dữ liệu chảy từ giao diện xuống cơ sở dữ liệu và ngược lại.",
+    features: [
+      "Cơ sở dữ liệu là gì và khi nào cần dùng",
+      "Bảng, khóa chính và quan hệ",
+      "Truy vấn SQL: SELECT, INSERT, UPDATE, DELETE",
+      "Kết nối cơ sở dữ liệu vào ứng dụng",
+    ],
+    outcomes: [
+      "Thiết kế được vài bảng đơn giản",
+      "Viết được truy vấn SQL cơ bản",
+      "Hiểu luồng dữ liệu trong một ứng dụng",
+    ],
+    bestFor: "Người muốn làm ứng dụng có lưu trữ dữ liệu.",
+    icon: "database",
+  },
+  {
+    slug: "du-an-thuc-hanh",
+    number: "06",
+    title: "Dự án thực hành",
+    tagline: "Biến kiến thức thành sản phẩm trong hồ sơ của bạn.",
+    summary:
+      "Áp dụng tất cả kiến thức để xây dựng các dự án thật: trang cá nhân, ứng dụng ghi chú và trang đăng ký.",
+    description:
+      "Kiến thức chỉ thực sự thuộc về bạn khi bạn tự tay làm ra sản phẩm. Bạn sẽ hoàn thành một vài dự án, học cách dùng Git và trình bày chúng trong hồ sơ cá nhân.",
+    features: [
+      "Xây dựng 3–5 dự án thật",
+      "Sử dụng Git và GitHub",
+      "Viết README và trình bày dự án",
+      "Chuẩn bị hồ sơ xin việc",
+    ],
+    outcomes: [
+      "Portfolio cá nhân có dự án",
+      "Làm quen quy trình làm việc nhóm",
+      "Tự tin ứng tuyển vị trí thực tập",
+    ],
+    bestFor: "Người đã nắm cơ bản và muốn có sản phẩm để chứng minh.",
+    icon: "project",
   },
 ];
 
-export const clients = [
-  "Meridian",
-  "Cove Financial",
-  "Atlas Logistics",
-  "Loomis",
-  "Fieldwork",
-  "Northstar Health",
+export const partners = [
+  "ĐH Bách Khoa",
+  "ĐH Quốc Gia",
+  "ĐH FPT",
+  "ĐH Kinh Tế",
+  "CĐ Công Thương",
+  "Học viện CNBC",
 ];
 
 export const stats = [
-  { value: "48+", label: "Products and sites launched" },
-  { value: "98%", label: "Client retention since 2019" },
-  { value: "12", label: "Industries served" },
-  { value: "4.9/5", label: "Average client rating" },
+  { value: "5.000+", label: "Học viên đã tham gia" },
+  { value: "120+", label: "Bài giảng tiếng Việt" },
+  { value: "4.8/5", label: "Điểm hài lòng của học viên" },
+  { value: "0đ", label: "Học phí cho người mới" },
 ];
 
 export type FeatureIcon = "users" | "clarity" | "shield" | "spark";
@@ -143,27 +209,27 @@ export const whyChooseUs: {
   icon: FeatureIcon;
 }[] = [
   {
-    title: "Senior people, directly involved",
+    title: "Lộ trình rõ ràng từ số 0",
     description:
-      "You work with the people doing the work. No layers of account management and no handoffs to a junior team.",
-    icon: "users",
-  },
-  {
-    title: "Clear scope and honest timelines",
-    description:
-      "Every engagement starts with a written plan, named milestones, and a realistic view of what it will take.",
+      "Bạn luôn biết mình đang ở đâu và học gì tiếp theo. Không nhảy cóc, không bỏ sót kiến thức nền tảng.",
     icon: "clarity",
   },
   {
-    title: "Designed and built under one roof",
+    title: "Học qua dự án thực tế",
     description:
-      "Strategy, design, and engineering sit at the same table, so decisions stay coherent from first sketch to launch.",
+      "Mỗi chủ đề đều gắn với một sản phẩm cụ thể, để bạn vừa hiểu lý thuyết vừa có thứ để khoe trong hồ sơ.",
+    icon: "users",
+  },
+  {
+    title: "Cộng đồng & trợ giảng hỗ trợ",
+    description:
+      "Khi bị mắc kẹt, bạn không học một mình. Cộng đồng và trợ giảng luôn sẵn sàng giải đáp thắc mắc.",
     icon: "shield",
   },
   {
-    title: "Built to be handed over",
+    title: "Nội dung tiếng Việt dễ hiểu",
     description:
-      "Documentation, accessible components, and clean code mean your team is never locked in or left guessing.",
+      "Bài giảng được viết bằng tiếng Việt, giải thích thuật ngữ rõ ràng, phù hợp cho người mới bắt đầu.",
     icon: "spark",
   },
 ];
@@ -180,38 +246,38 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Northline helped us turn a vague idea into a product our customers actually understand. The process was calm, clear, and remarkably fast.",
-    name: "Maya Chen",
-    role: "VP of Product",
-    company: "Meridian Health",
-    initials: "MC",
+      "Mình chưa từng viết code. Sau hai tháng học theo lộ trình ở đây, mình đã tự làm được trang web cá nhân đầu tiên.",
+    name: "Nguyễn Minh Anh",
+    role: "Sinh viên năm 2",
+    company: "ĐH Bách Khoa",
+    initials: "MA",
     accent: "from-blue-500 to-cyan-400",
   },
   {
     quote:
-      "Our new site is faster, clearer, and finally feels like us. Inbound leads are up 38% quarter over quarter.",
-    name: "Daniel Ortiz",
-    role: "Founder",
-    company: "Cove Financial",
-    initials: "DO",
+      "Cách giải thích rất dễ hiểu, có ví dụ ngay sau mỗi khái niệm. Mình không còn sợ những khái niệm như thuật toán nữa.",
+    name: "Trần Đức Huy",
+    role: "Nhân viên văn phòng",
+    company: "Chuyển ngành IT",
+    initials: "ĐH",
     accent: "from-violet-500 to-fuchsia-400",
   },
   {
     quote:
-      "They ask better questions than anyone we have worked with. Every decision was tied back to a real customer need.",
-    name: "Priya Nair",
-    role: "Chief Operating Officer",
-    company: "Atlas Logistics",
-    initials: "PN",
+      "Phần dự án thực hành giúp mình có sản phẩm để đưa vào CV. Mình đã được nhận vào vị trí thực tập nhờ portfolio này.",
+    name: "Lê Thu Hà",
+    role: "Thực tập sinh",
+    company: "FPT Software",
+    initials: "TH",
     accent: "from-emerald-500 to-teal-400",
   },
   {
     quote:
-      "The handover was the best we have ever had. Our team picked up the design system in a day and shipped the next release without us.",
-    name: "Elliot Brooks",
-    role: "Head of Engineering",
-    company: "Fieldwork",
-    initials: "EB",
+      "Điều mình thích nhất là lộ trình liên tục. Học xong phần này là biết ngay phần sau cần nắm gì.",
+    name: "Phạm Quốc Bảo",
+    role: "Học sinh lớp 12",
+    company: "TP. Hồ Chí Minh",
+    initials: "QB",
     accent: "from-amber-500 to-orange-400",
   },
 ];
@@ -221,147 +287,146 @@ export type ValueIcon = "compass" | "layers" | "heart";
 export const values: { title: string; description: string; icon: ValueIcon }[] =
   [
     {
-      title: "Clarity over cleverness",
+      title: "Dạy từ gốc, không học vẹt",
       description:
-        "The best work is easy to understand. We remove ambiguity before we add polish, and we explain our thinking in plain language.",
+        "Chúng tôi giải thích “vì sao” trước “làm thế nào”, để bạn hiểu bản chất thay vì ghi nhớ máy móc.",
       icon: "compass",
     },
     {
-      title: "Outcomes over output",
+      title: "Thực hành nhiều hơn lý thuyết",
       description:
-        "We measure success by what the work does for your business, not by how many screens or slide decks we produce.",
+        "Mỗi buổi học đều có bài tập và dự án nhỏ. Bạn viết code mỗi ngày, không chỉ đọc tài liệu.",
       icon: "layers",
     },
     {
-      title: "Collaboration over ego",
+      title: "Kiên nhẫn với người mới",
       description:
-        "The strongest ideas get better when the whole team is involved. We work with you, not around you.",
+        "Không có câu hỏi nào là ngớ ngẩn. Chúng tôi đi chậm ở đúng chỗ cần chậm để bạn không bị bỏ lại.",
       icon: "heart",
     },
   ];
 
 export const team = [
   {
-    name: "Alex Morgan",
-    role: "Founder & Creative Director",
-    initials: "AM",
+    name: "Trần Quốc Bảo",
+    role: "Người sáng lập & Giảng viên chính",
+    initials: "QB",
     accent: "from-brand-500 to-cyan-400",
-    bio: "Leads strategy and design with 15 years of experience across healthcare, fintech, and climate tech.",
+    bio: "10 năm kinh nghiệm giảng dạy và phát triển phần mềm, chuyên đưa kiến thức phức tạp về với người mới.",
   },
   {
-    name: "Sam Rivera",
-    role: "Design Lead",
-    initials: "SR",
+    name: "Lê Thu Hà",
+    role: "Cố vấn lộ trình học",
+    initials: "TH",
     accent: "from-violet-500 to-fuchsia-400",
-    bio: "Turns complex workflows into interfaces that feel obvious. Obsessed with systems and accessible defaults.",
+    bio: "Thiết kế lộ trình từ số 0 đến có việc làm, giúp học viên luôn biết bước tiếp theo của mình.",
   },
   {
-    name: "Jordan Lee",
-    role: "Engineering Lead",
-    initials: "JL",
+    name: "Phạm Đức Huy",
+    role: "Giảng viên lập trình web",
+    initials: "ĐH",
     accent: "from-emerald-500 to-teal-400",
-    bio: "Builds fast, resilient front ends in React and TypeScript. Happiest when the Lighthouse score is green.",
+    bio: "Kỹ sư front-end, thích biến mọi bài học thành một sản phẩm chạy được trên trình duyệt.",
   },
   {
-    name: "Nina Patel",
-    role: "Strategy Director",
-    initials: "NP",
+    name: "Võ Ngọc Lan",
+    role: "Giảng viên cơ sở dữ liệu",
+    initials: "NL",
     accent: "from-amber-500 to-orange-400",
-    bio: "Connects customer insight to business goals, keeping every engagement pointed at the right problem.",
+    bio: "Giúp học viên hiểu dữ liệu chảy như thế nào, từ giao diện xuống cơ sở dữ liệu và ngược lại.",
   },
 ];
 
 export const process = [
   {
     number: "01",
-    title: "Discover",
+    title: "Làm quen",
     description:
-      "We interview your team and customers, review the market, and agree on the problem worth solving.",
+      "Bắt đầu với tư duy lập trình và cách máy tính xử lý vấn đề — nền móng trước khi viết code.",
   },
   {
     number: "02",
-    title: "Define",
+    title: "Nắm nền tảng",
     description:
-      "We turn what we learned into positioning, scope, and a clear plan with milestones you can hold us to.",
+      "Học ngôn ngữ đầu tiên, cú pháp, điều kiện và vòng lặp qua các bài tập nhỏ, dễ hiểu.",
   },
   {
     number: "03",
-    title: "Design",
+    title: "Thực hành",
     description:
-      "We explore, prototype, and test the experience early — so the big decisions are made before build.",
+      "Luyện cấu trúc dữ liệu, giải thuật và làm web để kiến thức trở thành kỹ năng thật.",
   },
   {
     number: "04",
-    title: "Deliver",
+    title: "Xây dựng dự án",
     description:
-      "We build, test, and launch together, then hand over documentation and a roadmap for what is next.",
+      "Hoàn thiện các dự án cá nhân và đưa vào hồ sơ để sẵn sàng cho công việc đầu tiên.",
   },
 ];
 
 export const engagements = [
   {
-    title: "Product sprint",
-    duration: "2–4 weeks",
+    title: "Tự học theo lộ trình",
+    duration: "Thời gian tự do",
     description:
-      "A focused sprint to clarify direction, prototype the core experience, and de-risk the next phase.",
-    items: ["Discovery workshop", "Concept direction", "Clickable prototype", "Recommendation"],
+      "Học theo lộ trình có sẵn, xem bài giảng và làm bài tập bất cứ lúc nào bạn muốn.",
+    items: [
+      "Lộ trình từng bước",
+      "Bài giảng và bài tập miễn phí",
+      "Tài liệu tiếng Việt",
+      "Cộng đồng hỏi đáp",
+    ],
   },
   {
-    title: "End-to-end project",
-    duration: "6–12 weeks",
+    title: "Lớp trực tuyến có trợ giảng",
+    duration: "8 tuần",
     description:
-      "Strategy, design, and build as one connected engagement with a clear launch date.",
-    items: ["Full discovery", "Brand and product design", "Production build", "Launch support"],
+      "Học theo nhóm nhỏ, có buổi học trực tiếp và trợ giảng đồng hành trong suốt khóa.",
+    items: [
+      "Buổi học trực tiếp hằng tuần",
+      "Trợ giảng sửa bài",
+      "Dự án nhóm",
+      "Chứng nhận hoàn thành",
+    ],
   },
   {
-    title: "Ongoing partner",
-    duration: "Monthly",
+    title: "Kèm cặp 1-1",
+    duration: "Theo buổi",
     description:
-      "A senior design and engineering partner for teams shipping continuously.",
-    items: ["Reserved capacity", "Design system support", "Iterative improvements", "Quarterly reviews"],
+      "Đồng hành riêng với giảng viên để gỡ vướng, xây dựng lộ trình cá nhân và chuẩn bị phỏng vấn.",
+    items: [
+      "Lộ trình cá nhân hóa",
+      "Gỡ vướng trực tiếp",
+      "Ôn phỏng vấn",
+      "Phản hồi portfolio",
+    ],
   },
 ];
 
 export const faqs = [
   {
-    question: "What does a typical engagement look like?",
+    question: "Tôi chưa biết gì về lập trình, có học được không?",
     answer:
-      "Most projects begin with a short discovery phase, followed by design and build in weekly milestones. You will have a clear scope, a named team, and a shared channel for questions before we start.",
+      "Hoàn toàn được. Lộ trình được thiết kế cho người bắt đầu từ số 0, giải thích mọi thuật ngữ từ đầu và đi chậm ở những phần nền tảng.",
   },
   {
-    question: "How much does a project cost?",
+    question: "Tôi nên bắt đầu với ngôn ngữ nào?",
     answer:
-      "Projects are scoped around the outcome rather than a fixed package. After an initial conversation we provide a written proposal with a fixed fee, timeline, and deliverables — no open-ended hourly surprises.",
+      "Với người mới, Python hoặc JavaScript đều là lựa chọn tốt. Trong lộ trình chúng tôi so sánh cả hai để bạn chọn theo mục tiêu của mình.",
   },
   {
-    question: "Do you work with in-house teams?",
+    question: "Học xong tôi có thể làm được gì?",
     answer:
-      "Yes. We often embed with internal product, design, or engineering teams. We adapt to your tools and rituals, and we document decisions so the work continues smoothly after we leave.",
+      "Bạn sẽ có kiến thức nền tảng, một vài dự án trong hồ sơ cá nhân và đủ tự tin để tiếp tục học nâng cao hoặc ứng tuyển vị trí thực tập.",
   },
   {
-    question: "Can you maintain the site after launch?",
+    question: "Mỗi tuần tôi cần dành bao nhiêu thời gian?",
     answer:
-      "We offer ongoing partnerships for teams that want a reliable senior team on call. We can also hand over to your team with documentation, a component library, and a recorded walkthrough.",
+      "Khoảng 5–7 giờ mỗi tuần là đủ để theo kịp lộ trình. Quan trọng là học đều đặn hơn là học dồn.",
   },
   {
-    question: "Are you available remotely?",
+    question: "Tôi cần chuẩn bị gì trước khi học?",
     answer:
-      "We are based in San Francisco and work with teams across North America and Europe. Most collaboration happens remotely, with regular working sessions in your time zone.",
+      "Chỉ cần một chiếc máy tính kết nối internet. Bạn chưa cần biết trước bất kỳ kiến thức lập trình nào.",
   },
-];
-
-export const projectTypes = [
-  "Brand and website",
-  "Product design",
-  "Web development",
-  "Growth and optimization",
-  "Not sure yet",
-];
-
-export const budgets = [
-  "Under $25k",
-  "$25k – $50k",
-  "$50k – $100k",
-  "$100k+",
-  "Prefer not to say",
 ];

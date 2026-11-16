@@ -1,23 +1,14 @@
 import { Link } from "react-router";
-import { navLinks, services, site } from "../data/site";
-import {
-  Dribbble,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
-  XSocial,
-} from "./icons";
+import { navLinks, site, topics } from "../data/site";
+import { Facebook, Github, Mail, MapPin, Phone, Youtube } from "./icons";
 import { Logo } from "./logo";
 import { NewsletterForm } from "./newsletter-form";
 import { Container } from "./ui";
 
 const socialIcons = {
-  linkedin: Linkedin,
-  x: XSocial,
-  dribbble: Dribbble,
-  instagram: Instagram,
+  facebook: Facebook,
+  youtube: Youtube,
+  github: Github,
 };
 
 export function SiteFooter() {
@@ -52,7 +43,7 @@ export function SiteFooter() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label={`${site.name} on ${social.label}`}
+                    aria-label={`${site.name} trên ${social.label}`}
                     className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-slate-400 transition-colors hover:border-white/25 hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
                     <Icon className="h-4 w-4" />
@@ -62,13 +53,13 @@ export function SiteFooter() {
             </div>
 
             <p className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-              Studio notes
+              Nhận bài học mới
             </p>
             <NewsletterForm />
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold text-white">Explore</h2>
+            <h2 className="text-sm font-semibold text-white">Khám phá</h2>
             <ul className="mt-5 space-y-3">
               {navLinks.map((link) => (
                 <li key={link.to}>
@@ -84,15 +75,15 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold text-white">Services</h2>
+            <h2 className="text-sm font-semibold text-white">Chủ đề</h2>
             <ul className="mt-5 space-y-3">
-              {services.map((service) => (
-                <li key={service.slug}>
+              {topics.map((topic) => (
+                <li key={topic.slug}>
                   <Link
-                    to={`/services#${service.slug}`}
+                    to={`/lo-trinh#${topic.slug}`}
                     className="text-sm text-slate-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    {service.title}
+                    {topic.title}
                   </Link>
                 </li>
               ))}
@@ -100,7 +91,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h2 className="text-sm font-semibold text-white">Get in touch</h2>
+            <h2 className="text-sm font-semibold text-white">Liên hệ</h2>
             <ul className="mt-5 space-y-4 text-sm text-slate-400">
               <li>
                 <a
@@ -133,15 +124,15 @@ export function SiteFooter() {
 
         <div className="flex flex-col gap-4 border-t border-white/10 py-7 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {site.legalName}. All rights reserved.
+            © {year} {site.legalName}. Bảo lưu mọi quyền.
           </p>
           <div className="flex items-center gap-5">
-            <span className="hidden sm:inline">Made in San Francisco</span>
+            <span className="hidden sm:inline">Học lập trình từ con số 0</span>
             <a
               href="#top"
               className="font-medium text-slate-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Back to top
+              Lên đầu trang
             </a>
           </div>
         </div>

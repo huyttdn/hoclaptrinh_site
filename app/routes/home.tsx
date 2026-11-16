@@ -7,12 +7,14 @@ import {
   Check,
   Code,
   Compass,
+  Database,
   Heart,
   Layers,
+  Rocket,
   ShieldCheck,
   Sparkles,
   Target,
-  TrendingUp,
+  Terminal,
   Users,
 } from "../components/icons";
 import { TestimonialCarousel } from "../components/testimonial-carousel";
@@ -25,11 +27,11 @@ import {
   Stars,
 } from "../components/ui";
 import {
-  clients,
-  services,
+  partners,
   site,
   stats,
   testimonials,
+  topics,
   values,
   whyChooseUs,
 } from "../data/site";
@@ -37,16 +39,18 @@ import { pageMeta } from "../lib/seo";
 
 export function meta({}: Route.MetaArgs) {
   return pageMeta({
-    title: "Digital product studio",
+    title: "Học lập trình cho người mới",
     description: site.description,
   });
 }
 
-const serviceIcons = {
-  strategy: Compass,
-  design: Layers,
-  engineering: Code,
-  growth: TrendingUp,
+const topicIcons = {
+  thinking: Compass,
+  language: Code,
+  data: Layers,
+  web: Terminal,
+  database: Database,
+  project: Rocket,
 } as const;
 
 const featureIcons = {
@@ -66,9 +70,9 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <ClientStrip />
-      <ServicesSection />
-      <WhyNorthline />
+      <PartnerStrip />
+      <TopicsSection />
+      <WhyUs />
       <StatsBand />
       <AboutPreview />
       <TestimonialsSection />
@@ -91,26 +95,26 @@ function Hero() {
 
       <Container className="relative grid items-center gap-16 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:py-28">
         <div>
-          <Eyebrow>Independent digital studio</Eyebrow>
+          <Eyebrow>Lập trình cho người mới bắt đầu</Eyebrow>
           <h1 className="mt-6 text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.035em] text-ink sm:text-6xl lg:text-7xl">
-            Digital products that make complex ideas feel{" "}
+            Học lập trình từ{" "}
             <span className="font-serif italic tracking-normal text-brand-700">
-              simple
-            </span>
-            .
+              con số 0
+            </span>{" "}
+            theo một lộ trình rõ ràng.
           </h1>
           <p className="mt-6 max-w-xl text-pretty text-lg leading-8 text-slate-600">
-            Northline is a senior design and engineering studio. We help
-            ambitious teams shape, build, and launch websites and products that
-            are clear, fast, and built to last.
+            Học Code giúp bạn xây nền tảng lập trình vững chắc bằng bài giảng
+            tiếng Việt dễ hiểu, bài tập thực hành và các dự án thật — dành cho
+            người chưa từng viết một dòng code nào.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <ButtonLink to="/contact" size="lg">
-              Start a project
+            <ButtonLink to="/dang-ky" size="lg">
+              Đăng ký học
             </ButtonLink>
-            <ButtonLink to="/services" variant="secondary" size="lg">
-              Explore services
+            <ButtonLink to="/lo-trinh" variant="secondary" size="lg">
+              Xem lộ trình
             </ButtonLink>
           </div>
 
@@ -128,20 +132,23 @@ function Hero() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <Stars className="text-amber-400" label="Rated 4.9 out of 5 by clients" />
-                <span className="text-sm font-semibold text-ink">4.9/5</span>
+                <Stars
+                  className="text-amber-400"
+                  label="Học viên đánh giá 4.8 trên 5"
+                />
+                <span className="text-sm font-semibold text-ink">4.8/5</span>
               </div>
               <p className="mt-1 text-sm text-slate-500">
-                From 60+ engagements with ambitious teams.
+                Từ hơn 1.200 đánh giá của học viên.
               </p>
             </div>
           </div>
 
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600">
             {[
-              "Strategy-led",
-              "Design and build under one roof",
-              "Accessible by default",
+              "Miễn phí cho người mới",
+              "Bài giảng tiếng Việt",
+              "Học qua dự án thực tế",
             ].map((item) => (
               <li key={item} className="inline-flex items-center gap-1.5">
                 <Check className="h-4 w-4 text-brand-600" />
@@ -157,23 +164,23 @@ function Hero() {
   );
 }
 
-function ClientStrip() {
+function PartnerStrip() {
   return (
     <section
-      aria-label="Selected clients"
+      aria-label="Học viên đến từ"
       className="border-y border-slate-900/5 bg-white/50"
     >
       <Container className="py-8 sm:py-10">
         <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
-          Trusted by teams at
+          Học viên đến từ
         </p>
         <ul className="mt-5 grid grid-cols-2 items-center gap-x-6 gap-y-4 sm:grid-cols-3 lg:grid-cols-6">
-          {clients.map((client) => (
+          {partners.map((partner) => (
             <li
-              key={client}
+              key={partner}
               className="text-center text-sm font-semibold tracking-tight text-slate-500 transition-colors hover:text-slate-600 sm:text-base"
             >
-              {client}
+              {partner}
             </li>
           ))}
         </ul>
@@ -182,40 +189,36 @@ function ClientStrip() {
   );
 }
 
-function ServicesSection() {
+function TopicsSection() {
   return (
-    <section id="services" className="scroll-mt-28 py-20 sm:py-28">
+    <section id="noi-dung" className="scroll-mt-28 py-20 sm:py-28">
       <Container>
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
-            eyebrow="What we do"
+            eyebrow="Nội dung học"
             title={
               <>
-                One team from first idea to{" "}
+                Sáu chủ đề đưa bạn từ số 0 đến{" "}
                 <span className="font-serif italic text-brand-700">
-                  final launch
+                  có sản phẩm
                 </span>
                 .
               </>
             }
-            description="We connect strategy, design, and engineering so the thinking survives the build — and the result works as well as it looks."
+            description="Mỗi chủ đề xây dựng trên chủ đề trước đó, giúp bạn tiến bộ liên tục mà không bị hổng kiến thức nền tảng."
           />
-          <ButtonLink
-            to="/services"
-            variant="secondary"
-            className="shrink-0"
-          >
-            All services
+          <ButtonLink to="/lo-trinh" variant="secondary" className="shrink-0">
+            Toàn bộ lộ trình
           </ButtonLink>
         </div>
 
         <div className="mt-14 grid gap-5 md:grid-cols-2">
-          {services.map((service) => {
-            const Icon = serviceIcons[service.icon];
+          {topics.map((topic) => {
+            const Icon = topicIcons[topic.icon];
 
             return (
               <article
-                key={service.slug}
+                key={topic.slug}
                 className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white/70 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:bg-white hover:shadow-[0_30px_70px_-50px_rgba(15,23,42,0.55)] sm:p-8"
               >
                 <div
@@ -228,19 +231,19 @@ function ServicesSection() {
                       <Icon className="h-6 w-6" />
                     </span>
                     <span className="text-xs font-semibold tabular-nums text-slate-500">
-                      {service.number}
+                      {topic.number}
                     </span>
                   </div>
 
                   <h3 className="mt-6 text-xl font-semibold tracking-tight text-ink sm:text-2xl">
-                    {service.title}
+                    {topic.title}
                   </h3>
                   <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
-                    {service.summary}
+                    {topic.summary}
                   </p>
 
                   <ul className="mt-5 grid gap-2 sm:grid-cols-2">
-                    {service.features.slice(0, 4).map((feature) => (
+                    {topic.features.slice(0, 4).map((feature) => (
                       <li
                         key={feature}
                         className="flex items-start gap-2 text-sm text-slate-500"
@@ -252,10 +255,10 @@ function ServicesSection() {
                   </ul>
 
                   <Link
-                    to={`/services#${service.slug}`}
+                    to={`/lo-trinh#${topic.slug}`}
                     className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 transition-all hover:gap-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
                   >
-                    Explore {service.title.toLowerCase()}
+                    Tìm hiểu {topic.title.toLowerCase()}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -268,26 +271,26 @@ function ServicesSection() {
   );
 }
 
-function WhyNorthline() {
+function WhyUs() {
   return (
     <section className="relative overflow-hidden border-y border-slate-900/5 bg-white py-20 sm:py-28">
       <Container className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <SectionHeading
-            eyebrow="Why Northline"
+            eyebrow="Vì sao chọn Học Code"
             title={
               <>
-                Senior attention, without the{" "}
+                Học đúng cách ngay từ{" "}
                 <span className="font-serif italic text-brand-700">
-                  agency theatre
+                  những bước đầu
                 </span>
                 .
               </>
             }
-            description="You get a small, experienced team that stays close to the work. No layers, no handoffs, and no surprises about who is actually doing it."
+            description="Người mới thường bỏ cuộc vì lộ trình rối rắm và thiếu người đồng hành. Chúng tôi thiết kế mọi thứ để bạn đi từng bước thật chắc."
           />
-          <ButtonLink to="/about" variant="secondary" className="mt-8">
-            More about us
+          <ButtonLink to="/gioi-thieu" variant="secondary" className="mt-8">
+            Về chúng tôi
           </ButtonLink>
         </div>
 
@@ -355,22 +358,24 @@ function AboutPreview() {
               />
               <div className="relative">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-300">
-                  Our point of view
+                  Điều chúng tôi tin
                 </p>
                 <p className="mt-6 font-serif text-3xl leading-[1.12] sm:text-4xl">
-                  “The best digital work feels inevitable in hindsight. Getting
-                  there takes curiosity, candour, and a lot of editing.”
+                  “Ai cũng có thể học lập trình, nếu được bắt đầu đúng cách và
+                  không bị bỏ lại phía sau.”
                 </p>
                 <div className="mt-8 flex items-center gap-3">
                   <Avatar
-                    initials="AM"
+                    initials="QB"
                     accent="from-brand-400 to-cyan-300"
                     size="md"
                   />
                   <div>
-                    <p className="text-sm font-semibold text-white">Alex Morgan</p>
+                    <p className="text-sm font-semibold text-white">
+                      Trần Quốc Bảo
+                    </p>
                     <p className="text-sm text-slate-400">
-                      Founder & Creative Director
+                      Người sáng lập & Giảng viên chính
                     </p>
                   </div>
                 </div>
@@ -379,27 +384,27 @@ function AboutPreview() {
 
             <div className="absolute -bottom-6 -right-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-[0_20px_50px_-30px_rgba(15,23,42,0.5)] sm:-right-6">
               <p className="text-2xl font-semibold tracking-tight text-ink">
-                12 yrs
+                120+
               </p>
               <p className="mt-0.5 text-xs text-slate-500">
-                making complex things clear
+                bài giảng tiếng Việt
               </p>
             </div>
           </div>
 
           <div>
             <SectionHeading
-              eyebrow="About Northline"
+              eyebrow="Về Học Code"
               title={
                 <>
-                  A small studio with a{" "}
+                  Một nơi để bắt đầu mà{" "}
                   <span className="font-serif italic text-brand-700">
-                    clear point of view
+                    không sợ sai
                   </span>
                   .
                 </>
               }
-              description="We started Northline because we kept seeing the same problem: good ideas losing their shape between strategy, design, and engineering. So we built a studio where those disciplines never leave the same room."
+              description="Chúng tôi tạo ra Học Code vì tin rằng người mới xứng đáng có một lộ trình tử tế: rõ ràng, kiên nhẫn và gắn với sản phẩm thật."
             />
 
             <ul className="mt-8 space-y-4">
@@ -424,8 +429,8 @@ function AboutPreview() {
               })}
             </ul>
 
-            <ButtonLink to="/about" variant="secondary" className="mt-8">
-              Meet the team
+            <ButtonLink to="/gioi-thieu" variant="secondary" className="mt-8">
+              Gặp đội ngũ
             </ButtonLink>
           </div>
         </div>
@@ -440,22 +445,25 @@ function TestimonialsSection() {
       <Container>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
-            eyebrow="Client stories"
+            eyebrow="Học viên nói gì"
             title={
               <>
-                Good work. Better{" "}
+                Những bước tiến{" "}
                 <span className="font-serif italic text-brand-700">
-                  partnerships
+                  đầu tiên
                 </span>
                 .
               </>
             }
-            description="We measure success by what happens after launch — and by whether our clients would happily work with us again."
+            description="Chúng tôi đo thành công bằng việc học viên có thể tự tay làm ra sản phẩm và tiếp tục học mà không cần ai dẫn đường."
           />
           <div className="flex shrink-0 items-center gap-2 text-sm text-slate-500">
-            <Stars className="text-amber-400" label="Rated 4.9 out of 5 by clients" />
-            <span className="font-semibold text-ink">4.9</span> average across
-            60+ engagements
+            <Stars
+              className="text-amber-400"
+              label="Học viên đánh giá 4.8 trên 5"
+            />
+            <span className="font-semibold text-ink">4.8</span> điểm trung bình
+            từ hơn 1.200 đánh giá
           </div>
         </div>
 

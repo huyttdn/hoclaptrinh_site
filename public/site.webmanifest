@@ -1,7 +1,7 @@
 {
-  "name": "Northline",
-  "short_name": "Northline",
-  "description": "A senior design and engineering studio for ambitious teams.",
+  "name": "Học Code",
+  "short_name": "Học Code",
+  "description": "Học lập trình từ con số 0, dành cho người mới bắt đầu.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f7f6f2",

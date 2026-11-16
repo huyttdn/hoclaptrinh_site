@@ -16,7 +16,7 @@ describe("SiteHeader", () => {
   it("marks the current route as active", () => {
     renderHeader();
 
-    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Trang chủ" })).toHaveAttribute(
       "aria-current",
       "page",
     );
@@ -27,24 +27,22 @@ describe("SiteHeader", () => {
     renderHeader();
 
     expect(
-      screen.queryByRole("navigation", { name: "Mobile" }),
+      screen.queryByRole("navigation", { name: "Di động" }),
     ).not.toBeInTheDocument();
 
-    await user.click(
-      screen.getByRole("button", { name: /open navigation menu/i }),
-    );
+    await user.click(screen.getByRole("button", { name: /mở menu/i }));
 
     expect(
-      screen.getByRole("navigation", { name: "Mobile" }),
+      screen.getByRole("navigation", { name: "Di động" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /close navigation menu/i }),
+      screen.getByRole("button", { name: /đóng menu/i }),
     ).toHaveAttribute("aria-expanded", "true");
 
     await user.keyboard("{Escape}");
 
     expect(
-      screen.queryByRole("navigation", { name: "Mobile" }),
+      screen.queryByRole("navigation", { name: "Di động" }),
     ).not.toBeInTheDocument();
   });
 });

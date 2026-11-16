@@ -1,12 +1,14 @@
-import type { Route } from "./+types/services";
+import type { Route } from "./+types/lo-trinh";
 import { CtaBand } from "../components/cta-band";
 import {
   ArrowRight,
   Check,
   Code,
   Compass,
+  Database,
   Layers,
-  TrendingUp,
+  Rocket,
+  Terminal,
 } from "../components/icons";
 import {
   ButtonLink,
@@ -14,79 +16,81 @@ import {
   PageHero,
   SectionHeading,
 } from "../components/ui";
-import { engagements, process, services } from "../data/site";
+import { engagements, process, topics } from "../data/site";
 import { pageMeta } from "../lib/seo";
 
 export function meta({}: Route.MetaArgs) {
   return pageMeta({
-    title: "Services",
+    title: "Lộ trình học",
     description:
-      "Brand strategy, product design, web development, and growth services from Northline — one senior team from first idea to launch.",
+      "Lộ trình học lập trình cho người mới: từ tư duy lập trình, ngôn ngữ đầu tiên, cấu trúc dữ liệu, lập trình web đến cơ sở dữ liệu và dự án thực hành.",
   });
 }
 
-const serviceIcons = {
-  strategy: Compass,
-  design: Layers,
-  engineering: Code,
-  growth: TrendingUp,
+const topicIcons = {
+  thinking: Compass,
+  language: Code,
+  data: Layers,
+  web: Terminal,
+  database: Database,
+  project: Rocket,
 } as const;
 
-export default function Services() {
+export default function LoTrinh() {
   return (
     <>
       <PageHero
-        eyebrow="Services"
+        eyebrow="Lộ trình"
         title={
           <>
-            Strategy, design, and engineering{" "}
+            Một lộ trình liền mạch từ{" "}
             <span className="font-serif italic text-brand-700">
-              under one roof
-            </span>
-            .
+              người mới
+            </span>{" "}
+            đến có sản phẩm.
           </>
         }
-        description="We are a small senior team that can take a project from a difficult question to a finished product. Pick the piece you need, or bring us in for the whole journey."
+        description="Sáu chủ đề được sắp xếp theo thứ tự bạn nên học. Bạn có thể học tuần tự từ đầu, hoặc bắt đầu ở phần phù hợp với mình."
       >
-        <ButtonLink to="/contact" size="lg">
-          Start a project
+        <ButtonLink to="/dang-ky" size="lg">
+          Đăng ký học
         </ButtonLink>
-        <ButtonLink to="#process" variant="secondary" size="lg">
-          See our process
+        <ButtonLink to="#quy-trinh" variant="secondary" size="lg">
+          Xem quy trình
         </ButtonLink>
       </PageHero>
 
-      <ServiceDetails />
+      <TopicDetails />
       <ProcessSection />
       <EngagementSection />
 
       <CtaBand
-        title="Not sure which service you need?"
-        description="Tell us what is changing, what is stuck, or what you are trying to prove. We will help you find the right starting point."
-        primaryLabel="Book an intro call"
+        title="Chưa biết nên bắt đầu từ đâu?"
+        description="Đăng ký để được gợi ý điểm xuất phát phù hợp với trình độ và mục tiêu của bạn."
+        primaryLabel="Đăng ký tư vấn"
       />
     </>
   );
 }
 
-function ServiceDetails() {
+function TopicDetails() {
   return (
     <section className="py-20 sm:py-28">
       <Container>
         <SectionHeading
-          eyebrow="Capabilities"
-          title="Four ways we can help."
-          description="Each engagement is scoped around a real outcome. The work below is a starting point, not a rigid package — we shape it around your team and timeline."
+          eyebrow="Các chủ đề"
+          title="Sáu bước xây nền tảng."
+          description="Mỗi chủ đề đều có bài giảng, bài tập và một phần dự án nhỏ để bạn áp dụng ngay những gì vừa học."
         />
 
         <div className="mt-14 space-y-5">
-          {services.map((service) => {
-            const Icon = serviceIcons[service.icon];
+          {topics.map((topic) => {
+            const Icon = topicIcons[topic.icon];
 
             return (
               <article
-                key={service.slug}
-                id={service.slug}
+                key={topic.slug}
+                id={topic.slug}
                 className="scroll-mt-28 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-50px_rgba(15,23,42,0.35)] sm:p-8 lg:p-12"
               >
                 <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
@@ -96,33 +100,33 @@ function ServiceDetails() {
                         <Icon className="h-6 w-6" />
                       </span>
                       <span className="text-sm font-semibold tabular-nums text-slate-500">
-                        {service.number}
+                        {topic.number}
                       </span>
                     </div>
 
                     <h3 className="mt-6 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-                      {service.title}
+                      {topic.title}
                     </h3>
                     <p className="mt-2 font-serif text-xl italic text-brand-700">
-                      {service.tagline}
+                      {topic.tagline}
                     </p>
                     <p className="mt-5 text-sm leading-7 text-slate-600 sm:text-base">
-                      {service.description}
+                      {topic.description}
                     </p>
 
                     <div className="mt-6 rounded-2xl border border-slate-200 bg-paper/80 p-4 text-sm leading-6 text-slate-600">
-                      <span className="font-semibold text-ink">Best for:</span>{" "}
-                      {service.bestFor}
+                      <span className="font-semibold text-ink">Phù hợp với:</span>{" "}
+                      {topic.bestFor}
                     </div>
                   </div>
 
                   <div className="grid gap-8 sm:grid-cols-2">
                     <div>
                       <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                        What is included
+                        Bạn sẽ học
                       </h4>
                       <ul className="mt-4 space-y-3">
-                        {service.features.map((feature) => (
+                        {topic.features.map((feature) => (
                           <li
                             key={feature}
                             className="flex items-start gap-2.5 text-sm leading-6 text-slate-600"
@@ -136,26 +140,26 @@ function ServiceDetails() {
 
                     <div>
                       <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                        Typical deliverables
+                        Sau chủ đề này
                       </h4>
                       <ul className="mt-4 flex flex-wrap gap-2">
-                        {service.deliverables.map((deliverable) => (
+                        {topic.outcomes.map((outcome) => (
                           <li
-                            key={deliverable}
+                            key={outcome}
                             className="rounded-full border border-slate-200 bg-paper px-3 py-1.5 text-xs font-medium text-slate-600"
                           >
-                            {deliverable}
+                            {outcome}
                           </li>
                         ))}
                       </ul>
 
                       <ButtonLink
-                        to="/contact"
+                        to="/dang-ky"
                         variant="secondary"
                         size="sm"
                         className="mt-6"
                       >
-                        Discuss this service
+                        Học chủ đề này
                       </ButtonLink>
                     </div>
                   </div>
@@ -172,14 +176,14 @@ function ServiceDetails() {
 function ProcessSection() {
   return (
     <section
-      id="process"
+      id="quy-trinh"
       className="scroll-mt-28 border-y border-slate-900/5 bg-white py-20 sm:py-28"
     >
       <Container>
         <SectionHeading
-          eyebrow="How we work"
-          title="A calm, deliberate process."
-          description="No mystery, no black boxes. You will always know what we are doing, why it matters, and what comes next."
+          eyebrow="Cách học"
+          title="Bốn giai đoạn, đi từng bước."
+          description="Bạn không cần học hết mọi thứ cùng lúc. Chỉ cần đi lần lượt qua từng giai đoạn và làm đủ bài tập."
         />
 
         <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -203,8 +207,7 @@ function ProcessSection() {
 
         <div className="mt-10 flex items-center gap-2 text-sm text-slate-500">
           <ArrowRight className="h-4 w-4 text-brand-600" />
-          Most projects run in weekly milestones, with a working session every
-          step of the way.
+          Mỗi tuần khoảng 5–7 giờ là đủ để theo kịp lộ trình.
         </div>
       </Container>
     </section>
@@ -216,9 +219,9 @@ function EngagementSection() {
     <section className="py-20 sm:py-28">
       <Container>
         <SectionHeading
-          eyebrow="Ways to work together"
-          title="Start where it makes sense."
-          description="Every team is at a different stage. These are the three shapes our engagements usually take."
+          eyebrow="Hình thức học"
+          title="Chọn cách học phù hợp."
+          description="Dù bạn muốn tự học hay cần người kèm cặp, đều có một lựa chọn dành cho bạn."
         />
 
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
@@ -275,12 +278,12 @@ function EngagementSection() {
                 </ul>
 
                 <ButtonLink
-                  to="/contact"
+                  to="/dang-ky"
                   variant={featured ? "light" : "secondary"}
                   size="sm"
                   className="mt-7 w-fit"
                 >
-                  Enquire
+                  Đăng ký
                 </ButtonLink>
               </div>
             );

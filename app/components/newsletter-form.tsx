@@ -23,7 +23,7 @@ export function NewsletterForm() {
   return (
     <form className="mt-6 max-w-md" onSubmit={handleSubmit} noValidate>
       <label htmlFor={inputId} className="sr-only">
-        Email address for the Northline newsletter
+        Email nhận bài học mới
       </label>
       <div className="flex flex-col gap-2 sm:flex-row">
         <input
@@ -32,7 +32,7 @@ export function NewsletterForm() {
           type="email"
           autoComplete="email"
           inputMode="email"
-          placeholder="Your email address"
+          placeholder="Email của bạn"
           value={email}
           onChange={(event) => {
             setEmail(event.target.value);
@@ -46,7 +46,7 @@ export function NewsletterForm() {
           type="submit"
           className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-ink transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
-          Subscribe
+          Đăng ký
         </button>
       </div>
       <p
@@ -61,10 +61,10 @@ export function NewsletterForm() {
         role={status === "error" ? "alert" : status === "success" ? "status" : undefined}
       >
         {status === "error"
-          ? "Please enter a valid email address."
+          ? "Vui lòng nhập địa chỉ email hợp lệ."
           : status === "success"
-            ? "You're on the list. We'll keep it useful."
-            : "Occasional notes on design, product, and growth. No spam."}
+            ? "Đã đăng ký. Hẹn gặp bạn ở bài học tiếp theo!"
+            : "Bài học và mẹo lập trình, gửi không thường xuyên. Không spam."}
       </p>
     </form>
   );
