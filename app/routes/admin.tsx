@@ -518,7 +518,8 @@ function Dashboard({ session }: { session: Session }) {
               ) : rows.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-4 py-16 text-center text-slate-500">
-                    Chưa có học viên nào đăng ký.
+                    Chưa có học viên nào đăng ký. Khi có học viên, bạn có thể tải
+                    ảnh đại diện cho từng người ở cột <strong>Ảnh</strong>.
                   </td>
                 </tr>
               ) : (
@@ -528,7 +529,16 @@ function Dashboard({ session }: { session: Session }) {
                       {(page - 1) * PAGE_SIZE + index + 1}
                     </td>
                     <td className="px-4 py-3">
-                      <span className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50 text-slate-400">
+                      <button
+                        type="button"
+                        onClick={() => handleAvatarPick(row.id)}
+                        disabled={uploadingId === row.id}
+                        aria-label={`Tải ảnh đại diện cho ${row.full_name}`}
+                        title={
+                          row.avatar_path ? "Thay ảnh đại diện" : "Tải ảnh đại diện"
+                        }
+                        className="group/avatar relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50 text-slate-400 transition-colors hover:border-brand-300 hover:text-brand-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 disabled:cursor-not-allowed"
+                      >
                         {uploadingId === row.id ? (
                           <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500" />
                         ) : avatarUrls[row.id] ? (
@@ -541,7 +551,12 @@ function Dashboard({ session }: { session: Session }) {
                         ) : (
                           <Picture className="h-5 w-5" />
                         )}
-                      </span>
+                        {uploadingId === row.id ? null : (
+                          <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-ink/55 text-white opacity-0 transition-opacity group-hover/avatar:opacity-100 group-focus-visible/avatar:opacity-100">
+                            <Upload className="h-4 w-4" />
+                          </span>
+                        )}
+                      </button>
                     </td>
                     <td className="px-4 py-3 font-medium text-ink">
                       {row.full_name}
