@@ -2,7 +2,6 @@ import { Link } from "react-router";
 import { navLinks, site } from "../data/site";
 import { Facebook, Github, Mail, MapPin, Phone, Youtube } from "./icons";
 import { Logo } from "./logo";
-import { NewsletterForm } from "./newsletter-form";
 import { Container } from "./ui";
 
 const socialIcons = {
@@ -51,11 +50,6 @@ export function SiteFooter() {
                 );
               })}
             </div>
-
-            <p className="mt-8 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-              Nhận bài học mới
-            </p>
-            <NewsletterForm />
           </div>
 
           <div>
