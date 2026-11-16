@@ -27,18 +27,26 @@ Dev server chạy tại `http://localhost:5173`.
 
 ## Cấu hình Supabase
 
-### 1. Tạo bảng và phân quyền
+### 1. Tạo bảng, bucket và phân quyền
 
 Mở Supabase → **SQL Editor** → **New query**, dán toàn bộ nội dung file
 [`supabase/schema.sql`](./supabase/schema.sql) và bấm **Run**.
 
-File này tạo bảng `registration`, bật Row Level Security và thiết lập chính sách:
+File này tạo bảng `registration`, bucket lưu ảnh `avatars`, bật Row Level
+Security và thiết lập chính sách:
 
 | Hành động | Ai được phép |
 | --- | --- |
-| `INSERT` (gửi đăng ký) | Tất cả mọi người (form công khai) |
-| `SELECT` (xem danh sách) | Chỉ người đã đăng nhập |
-| `DELETE` (xóa) | Chỉ người đã đăng nhập |
+| `INSERT` đăng ký (form công khai) | Tất cả mọi người |
+| `SELECT` / `DELETE` danh sách | Chỉ người đã đăng nhập |
+| Đọc/ghi/xóa ảnh trong bucket `avatars` | Chỉ người đã đăng nhập |
+
+> **Đã tạo bảng trước đó?** Chỉ cần chạy thêm file
+> [`supabase/migrations/0002_avatar_storage.sql`](./supabase/migrations/0002_avatar_storage.sql)
+> để thêm cột `avatar_path` và bucket `avatars`.
+
+Ảnh đại diện được lưu trong bucket **riêng tư** (`avatars`) và hiển thị ở trang
+quản trị qua *signed URL* có thời hạn, nên ảnh không bị lộ ra công khai.
 
 ### 2. Tạo tài khoản quản trị
 
@@ -76,6 +84,7 @@ Variables** rồi deploy lại.
 2. Đăng nhập bằng tài khoản quản trị đã tạo ở bước trên.
 3. Tại đây bạn có thể:
    - Xem danh sách học viên đã đăng ký (10 bản ghi mỗi trang)
+   - Tải lên / thay / xóa **ảnh đại diện** cho từng học viên (JPG, PNG, WEBP, GIF ≤ 2MB)
    - Phân trang, làm mới dữ liệu
    - Xóa từng bản ghi (có xác nhận)
    - Xóa toàn bộ danh sách (có hộp thoại xác nhận)
@@ -143,6 +152,7 @@ app/
 ├── lib/
 │   ├── supabase.ts      Khởi tạo Supabase client
 │   ├── registrations.ts Truy vấn bảng registration
+│   ├── storage.ts       Tải/xóa ảnh đại diện trên Supabase Storage
 │   ├── export-excel.ts  Xuất file Excel
 │   └── seo.ts           Helper metadata
 ├── routes/              Trang chủ, lộ trình, giới thiệu, đăng ký, admin, 404
@@ -151,6 +161,7 @@ app/
 ├── root.tsx             Khung tài liệu, header, footer, error boundary
 └── routes.ts            Cấu hình route
 public/                  Tài nguyên tĩnh và cấu hình hosting
-supabase/schema.sql      Schema database + RLS
+supabase/schema.sql      Schema database + RLS + bucket ảnh
+supabase/migrations/     Migration bổ sung cho database đã tạo trước đó
 scripts/serve.mjs        Server xem thử bản build tĩnh
 ```

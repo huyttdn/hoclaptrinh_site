@@ -411,3 +411,23 @@ export function UsersPlus(props: IconProps) {
     </svg>
   );
 }
+
+export function Upload(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 16V4" />
+      <path d="m7 9 5-5 5 5" />
+      <path d="M5 20h14" />
+    </svg>
+  );
+}
+
+export function Picture(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="3" y="4.5" width="18" height="15" rx="2.5" />
+      <circle cx="9" cy="10" r="1.6" />
+      <path d="m5 17 4.5-4.5L13 16l2.5-2.5L20 17.5" />
+    </svg>
+  );
+}

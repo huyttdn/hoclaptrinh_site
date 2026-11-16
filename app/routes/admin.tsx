@@ -1,14 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import type { FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import type { Session } from "@supabase/supabase-js";
 import type { Route } from "./+types/admin";
 import {
   Download,
   Lock,
   LogOut,
+  Picture,
   RefreshCw,
   Search,
   Trash,
+  Upload,
   UsersPlus,
 } from "../components/icons";
 import { Container } from "../components/ui";
@@ -18,8 +20,15 @@ import {
   deleteRegistration,
   listAllRegistrations,
   listRegistrations,
+  updateRegistrationAvatar,
   type Registration,
 } from "../lib/registrations";
+import {
+  createAvatarUrlMap,
+  removeAvatars,
+  uploadAvatar,
+  validateAvatarFile,
+} from "../lib/storage";
 import { getSupabase, isSupabaseConfigured } from "../lib/supabase";
 import { pageMeta } from "../lib/seo";
 
@@ -217,6 +226,10 @@ function Dashboard({ session }: { session: Session }) {
   const [confirmAll, setConfirmAll] = useState(false);
   const [deletingAll, setDeletingAll] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [avatarUrls, setAvatarUrls] = useState<Record<string, string>>({});
+  const [uploadingId, setUploadingId] = useState<string | null>(null);
+  const [uploadTargetId, setUploadTargetId] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const totalPages = Math.max(1, Math.ceil(count / PAGE_SIZE));
 
@@ -230,6 +243,11 @@ function Dashboard({ session }: { session: Session }) {
       });
       setRows(result.rows);
       setCount(result.count);
+      try {
+        setAvatarUrls(await createAvatarUrlMap(result.rows));
+      } catch {
+        setAvatarUrls({});
+      }
     } catch (loadError) {
       setError(
         loadError instanceof Error
@@ -254,6 +272,10 @@ function Dashboard({ session }: { session: Session }) {
   async function handleDelete(id: string) {
     setBusyId(id);
     try {
+      const target = rows.find((row) => row.id === id);
+      if (target?.avatar_path) {
+        await removeAvatars([target.avatar_path]).catch(() => undefined);
+      }
       await deleteRegistration(id);
       setConfirmId(null);
       await load(page);
@@ -272,6 +294,11 @@ function Dashboard({ session }: { session: Session }) {
     setDeletingAll(true);
     setError("");
     try {
+      const all = await listAllRegistrations();
+      const paths = all
+        .map((row) => row.avatar_path)
+        .filter((path): path is string => Boolean(path));
+      await removeAvatars(paths).catch(() => undefined);
       await deleteAllRegistrations();
       setConfirmAll(false);
       setPage(1);
@@ -284,6 +311,64 @@ function Dashboard({ session }: { session: Session }) {
       );
     } finally {
       setDeletingAll(false);
+    }
+  }
+
+  function handleAvatarPick(id: string) {
+    setUploadTargetId(id);
+    fileInputRef.current?.click();
+  }
+
+  async function handleAvatarChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    const id = uploadTargetId;
+    if (!file || !id) return;
+
+    const validationError = validateAvatarFile(file);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    const target = rows.find((row) => row.id === id);
+    setUploadingId(id);
+    setError("");
+    try {
+      const path = await uploadAvatar(id, file);
+      await updateRegistrationAvatar(id, path);
+      if (target?.avatar_path) {
+        await removeAvatars([target.avatar_path]).catch(() => undefined);
+      }
+      await load(page);
+    } catch (uploadError) {
+      setError(
+        uploadError instanceof Error
+          ? uploadError.message
+          : "Không thể tải ảnh lên.",
+      );
+    } finally {
+      setUploadingId(null);
+      setUploadTargetId(null);
+    }
+  }
+
+  async function handleAvatarRemove(row: Registration) {
+    if (!row.avatar_path) return;
+    setBusyId(row.id);
+    setError("");
+    try {
+      await updateRegistrationAvatar(row.id, null);
+      await removeAvatars([row.avatar_path]).catch(() => undefined);
+      await load(page);
+    } catch (removeError) {
+      setError(
+        removeError instanceof Error
+          ? removeError.message
+          : "Không thể xóa ảnh.",
+      );
+    } finally {
+      setBusyId(null);
     }
   }
 
@@ -397,16 +482,25 @@ function Dashboard({ session }: { session: Session }) {
         </p>
       ) : null}
 
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp,image/gif"
+        className="hidden"
+        onChange={(event) => void handleAvatarChange(event)}
+      />
+
       <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[44rem] border-collapse text-left text-sm">
+          <table className="w-full min-w-[52rem] border-collapse text-left text-sm">
             <thead>
               <tr className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <th className="w-16 px-4 py-3 font-semibold">STT</th>
+                <th className="w-24 px-4 py-3 font-semibold">Ảnh</th>
                 <th className="px-4 py-3 font-semibold">Họ và tên</th>
                 <th className="px-4 py-3 font-semibold">Số điện thoại (Zalo)</th>
                 <th className="px-4 py-3 font-semibold">Thời gian đăng ký</th>
-                <th className="w-32 px-4 py-3 text-right font-semibold">
+                <th className="w-44 px-4 py-3 text-right font-semibold">
                   Thao tác
                 </th>
               </tr>
@@ -414,7 +508,7 @@ function Dashboard({ session }: { session: Session }) {
             <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-16 text-center text-slate-500">
+                  <td colSpan={6} className="px-4 py-16 text-center text-slate-500">
                     <span className="inline-flex items-center gap-2">
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500" />
                       Đang tải danh sách...
@@ -423,7 +517,7 @@ function Dashboard({ session }: { session: Session }) {
                 </tr>
               ) : rows.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-16 text-center text-slate-500">
+                  <td colSpan={6} className="px-4 py-16 text-center text-slate-500">
                     Chưa có học viên nào đăng ký.
                   </td>
                 </tr>
@@ -432,6 +526,22 @@ function Dashboard({ session }: { session: Session }) {
                   <tr key={row.id} className="hover:bg-slate-50/70">
                     <td className="px-4 py-3 tabular-nums text-slate-500">
                       {(page - 1) * PAGE_SIZE + index + 1}
+                    </td>
+                    <td className="px-4 py-3">
+                      <span className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50 text-slate-400">
+                        {uploadingId === row.id ? (
+                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500" />
+                        ) : avatarUrls[row.id] ? (
+                          <img
+                            src={avatarUrls[row.id]}
+                            alt={`Ảnh đại diện của ${row.full_name}`}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <Picture className="h-5 w-5" />
+                        )}
+                      </span>
                     </td>
                     <td className="px-4 py-3 font-medium text-ink">
                       {row.full_name}
@@ -449,9 +559,9 @@ function Dashboard({ session }: { session: Session }) {
                     <td className="px-4 py-3 text-slate-600">
                       {formatDateTime(row.created_at)}
                     </td>
-                    <td className="px-4 py-3 text-right">
+                    <td className="px-4 py-3">
                       {confirmId === row.id ? (
-                        <span className="inline-flex items-center gap-2">
+                        <span className="flex items-center justify-end gap-2">
                           <button
                             type="button"
                             onClick={() => void handleDelete(row.id)}
@@ -469,14 +579,39 @@ function Dashboard({ session }: { session: Session }) {
                           </button>
                         </span>
                       ) : (
-                        <button
-                          type="button"
-                          onClick={() => setConfirmId(row.id)}
-                          aria-label={`Xóa đăng ký của ${row.full_name}`}
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600"
-                        >
-                          <Trash className="h-4 w-4" />
-                        </button>
+                        <span className="flex items-center justify-end gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => handleAvatarPick(row.id)}
+                            disabled={uploadingId === row.id}
+                            aria-label={`Tải ảnh đại diện cho ${row.full_name}`}
+                            title={row.avatar_path ? "Thay ảnh" : "Tải ảnh"}
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 disabled:opacity-50"
+                          >
+                            <Upload className="h-4 w-4" />
+                          </button>
+                          {row.avatar_path ? (
+                            <button
+                              type="button"
+                              onClick={() => void handleAvatarRemove(row)}
+                              disabled={busyId === row.id}
+                              aria-label={`Xóa ảnh đại diện của ${row.full_name}`}
+                              title="Xóa ảnh"
+                              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-amber-200 hover:bg-amber-50 hover:text-amber-700 disabled:opacity-50"
+                            >
+                              <Picture className="h-4 w-4" />
+                            </button>
+                          ) : null}
+                          <button
+                            type="button"
+                            onClick={() => setConfirmId(row.id)}
+                            aria-label={`Xóa đăng ký của ${row.full_name}`}
+                            title="Xóa đăng ký"
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600"
+                          >
+                            <Trash className="h-4 w-4" />
+                          </button>
+                        </span>
                       )}
                     </td>
                   </tr>
