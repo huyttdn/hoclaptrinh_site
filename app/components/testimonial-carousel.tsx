@@ -16,7 +16,7 @@ export function TestimonialCarousel() {
 
   return (
     <div className="grid gap-5 lg:grid-cols-[1.3fr_0.7fr]">
-      <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-white p-7 shadow-[0_24px_70px_-50px_rgba(15,23,42,0.5)] sm:p-10">
+      <div className="relative overflow-hidden rounded-[2rem] border border-slate-200 bg-surface p-7 shadow-[0_24px_70px_-50px_rgba(0,0,0,0.7)] sm:p-10">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-brand-100/70 blur-3xl"
@@ -24,7 +24,7 @@ export function TestimonialCarousel() {
         <div className="relative">
           <div className="flex items-center justify-between gap-4">
             <Stars className="text-amber-400" />
-            <Quote className="h-9 w-9 text-brand-200" />
+            <Quote className="h-9 w-9 text-brand-500/40" />
           </div>
 
           <div key={active.name} className="animate-fade-up">
@@ -90,7 +90,7 @@ export function TestimonialCarousel() {
               className={`group flex flex-1 items-center gap-3 rounded-2xl border p-4 text-left transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 ${
                 isActive
                   ? "border-brand-200 bg-brand-50/70 shadow-sm"
-                  : "border-slate-200 bg-white/60 hover:border-slate-300 hover:bg-white"
+                  : "border-slate-200 bg-surface/60 hover:border-slate-300 hover:bg-surface-2"
               }`}
             >
               <Avatar

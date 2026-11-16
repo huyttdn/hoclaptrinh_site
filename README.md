@@ -42,11 +42,12 @@ Security và thiết lập chính sách:
 | Đọc/ghi/xóa ảnh trong bucket `avatars` | Chỉ người đã đăng nhập |
 
 > **Đã tạo bảng trước đó?** Chỉ cần chạy thêm file
-> [`supabase/migrations/0002_avatar_storage.sql`](./supabase/migrations/0002_avatar_storage.sql)
-> để thêm cột `avatar_path` và bucket `avatars`.
+> [`supabase/migrations/0003_admin_avatar.sql`](./supabase/migrations/0003_admin_avatar.sql)
+> để bỏ cột `avatar_path` không còn dùng và đảm bảo bucket `avatars`.
 
-Ảnh đại diện được lưu trong bucket **riêng tư** (`avatars`) và hiển thị ở trang
-quản trị qua *signed URL* có thời hạn, nên ảnh không bị lộ ra công khai.
+Ảnh đại diện của **tài khoản quản trị** được lưu trong bucket **riêng tư**
+(`avatars`) và hiển thị ở trang quản trị qua *signed URL* có thời hạn, nên ảnh
+không bị lộ ra công khai.
 
 ### 2. Tạo tài khoản quản trị
 
@@ -84,7 +85,7 @@ Variables** rồi deploy lại.
 2. Đăng nhập bằng tài khoản quản trị đã tạo ở bước trên.
 3. Tại đây bạn có thể:
    - Xem danh sách học viên đã đăng ký (10 bản ghi mỗi trang)
-   - Tải lên / thay / xóa **ảnh đại diện** cho từng học viên (JPG, PNG, WEBP, GIF ≤ 2MB)
+   - Tải lên / thay / xóa **ảnh đại diện** cho tài khoản quản trị (JPG, PNG, WEBP, GIF ≤ 2MB)
    - Phân trang, làm mới dữ liệu
    - Xóa từng bản ghi (có xác nhận)
    - Xóa toàn bộ danh sách (có hộp thoại xác nhận)
@@ -152,7 +153,7 @@ app/
 ├── lib/
 │   ├── supabase.ts      Khởi tạo Supabase client
 │   ├── registrations.ts Truy vấn bảng registration
-│   ├── storage.ts       Tải/xóa ảnh đại diện trên Supabase Storage
+│   ├── storage.ts       Tải/xóa ảnh đại diện quản trị trên Supabase Storage
 │   ├── export-excel.ts  Xuất file Excel
 │   └── seo.ts           Helper metadata
 ├── routes/              Trang chủ (landing + form đăng ký), admin, 404

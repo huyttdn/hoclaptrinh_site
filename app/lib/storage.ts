@@ -30,12 +30,14 @@ function extensionOf(file: File): string {
   return file.type.split("/").pop() ?? "jpg";
 }
 
-export async function uploadAvatar(
-  registrationId: string,
-  file: File,
-): Promise<string> {
-  const path = `${registrationId}/${Date.now()}.${extensionOf(file)}`;
+export function getAdminAvatarPath(
+  user: { user_metadata?: Record<string, unknown> } | null | undefined,
+): string | null {
+  const value = user?.user_metadata?.avatar_path;
+  return typeof value === "string" && value.length > 0 ? value : null;
+}
 
+async function uploadObject(path: string, file: File): Promise<void> {
   const { error } = await getSupabase()
     .storage.from(AVATARS_BUCKET)
     .upload(path, file, {
@@ -45,46 +47,61 @@ export async function uploadAvatar(
     });
 
   if (error) throw new Error(message(error, "Không thể tải ảnh lên."));
-  return path;
 }
 
-export async function removeAvatars(paths: string[]): Promise<void> {
-  const targets = paths.filter((path): path is string => Boolean(path));
-  if (targets.length === 0) return;
+async function removeObject(path: string | null | undefined): Promise<void> {
+  if (!path) return;
 
   const { error } = await getSupabase()
     .storage.from(AVATARS_BUCKET)
-    .remove(targets);
+    .remove([path]);
 
   if (error) throw new Error(message(error, "Không thể xóa ảnh."));
 }
 
-export async function createAvatarUrlMap(
-  entries: { id: string; avatar_path: string | null }[],
-): Promise<Record<string, string>> {
-  const withPath = entries.filter(
-    (entry): entry is { id: string; avatar_path: string } =>
-      Boolean(entry.avatar_path),
-  );
-  if (withPath.length === 0) return {};
-
+export async function createAvatarUrl(path: string): Promise<string> {
   const { data, error } = await getSupabase()
     .storage.from(AVATARS_BUCKET)
-    .createSignedUrls(
-      withPath.map((entry) => entry.avatar_path),
-      AVATAR_URL_TTL_SECONDS,
-    );
+    .createSignedUrl(path, AVATAR_URL_TTL_SECONDS);
 
-  if (error) throw new Error(message(error, "Không thể tải ảnh."));
+  if (error || !data) throw new Error(message(error, "Không thể tải ảnh."));
+  return data.signedUrl;
+}
 
-  const byPath = new Map(
-    (data ?? []).map((item) => [item.path, item.signedUrl] as const),
-  );
+export async function updateAdminAvatar(file: File): Promise<string> {
+  const { data, error } = await getSupabase().auth.getUser();
+  if (error || !data.user) throw new Error("Phiên đăng nhập đã hết hạn.");
 
-  const map: Record<string, string> = {};
-  for (const entry of withPath) {
-    const url = byPath.get(entry.avatar_path);
-    if (url) map[entry.id] = url;
+  const previous = getAdminAvatarPath(data.user);
+  const path = `${data.user.id}/${Date.now()}.${extensionOf(file)}`;
+
+  await uploadObject(path, file);
+
+  const { error: saveError } = await getSupabase().auth.updateUser({
+    data: { avatar_path: path },
+  });
+
+  if (saveError) {
+    await removeObject(path).catch(() => undefined);
+    throw new Error(message(saveError, "Không thể lưu ảnh đại diện."));
   }
-  return map;
+
+  if (previous && previous !== path) {
+    await removeObject(previous).catch(() => undefined);
+  }
+
+  return path;
+}
+
+export async function deleteAdminAvatar(): Promise<void> {
+  const { data } = await getSupabase().auth.getUser();
+  const previous = getAdminAvatarPath(data.user);
+
+  const { error } = await getSupabase().auth.updateUser({
+    data: { avatar_path: null },
+  });
+
+  if (error) throw new Error(message(error, "Không thể xóa ảnh đại diện."));
+
+  await removeObject(previous).catch(() => undefined);
 }

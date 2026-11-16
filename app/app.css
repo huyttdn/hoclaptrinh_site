@@ -7,20 +7,41 @@
   --font-serif: "Fraunces", ui-serif, Georgia, Cambria, "Times New Roman",
     Times, serif;
 
-  --color-paper: #f7f9fc;
-  --color-ink: #0b1120;
+  /* ---- Dark theme palette ------------------------------------------------- */
+  /* Surfaces & lines */
+  --color-paper: #070b14;
+  --color-ink: #eef3fb;
+  --color-night: #0d1424;
+  --color-night-2: #1a2438;
+  --color-surface: #0e1626;
+  --color-surface-2: #18223a;
+  --color-line: #1e2a44;
 
-  --color-brand-50: #eef7ff;
-  --color-brand-100: #d9edff;
-  --color-brand-200: #b7dcff;
-  --color-brand-300: #84c6ff;
+  /* Inverted neutral scale: light utilities now read as dark surfaces/text */
+  --color-slate-50: #0a1020;
+  --color-slate-100: #131c30;
+  --color-slate-200: #1c2740;
+  --color-slate-300: #2a3752;
+  --color-slate-400: #8593ab;
+  --color-slate-500: #98a6be;
+  --color-slate-600: #b7c1d5;
+  --color-slate-700: #ced7e7;
+  --color-slate-800: #e0e7f3;
+  --color-slate-900: #eff3fb;
+  --color-slate-950: #f7faff;
+
+  /* Brand scale tuned for dark backgrounds */
+  --color-brand-50: #0b1a2e;
+  --color-brand-100: #112742;
+  --color-brand-200: #1c3f6b;
+  --color-brand-300: #5aa8ff;
   --color-brand-400: #4aa8ff;
   --color-brand-500: #2186f5;
-  --color-brand-600: #0f68db;
-  --color-brand-700: #0f53b0;
-  --color-brand-800: #12468f;
-  --color-brand-900: #143c75;
-  --color-brand-950: #0e2547;
+  --color-brand-600: #5aa8ff;
+  --color-brand-700: #8bc0ff;
+  --color-brand-800: #aed3ff;
+  --color-brand-900: #cfe4ff;
+  --color-brand-950: #eaf3ff;
 }
 
 @layer base {
@@ -28,6 +49,7 @@
     scroll-behavior: smooth;
     scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
   }
 
   body {
@@ -35,7 +57,7 @@
   }
 
   ::selection {
-    @apply bg-brand-200 text-ink;
+    @apply bg-brand-500/30 text-ink;
   }
 
   :focus-visible {

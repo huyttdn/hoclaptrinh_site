@@ -6,7 +6,6 @@ export type Registration = {
   id: string;
   full_name: string;
   phone: string;
-  avatar_path: string | null;
   created_at: string;
 };
 
@@ -90,18 +89,6 @@ export async function deleteRegistration(id: string): Promise<void> {
     .eq("id", id);
 
   if (error) throw new Error(message(error, "Không thể xóa đăng ký."));
-}
-
-export async function updateRegistrationAvatar(
-  id: string,
-  avatarPath: string | null,
-): Promise<void> {
-  const { error } = await getSupabase()
-    .from("registration")
-    .update({ avatar_path: avatarPath })
-    .eq("id", id);
-
-  if (error) throw new Error(message(error, "Không thể lưu ảnh đại diện."));
 }
 
 export async function deleteAllRegistrations(): Promise<void> {

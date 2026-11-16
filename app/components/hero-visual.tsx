@@ -14,8 +14,8 @@ export function HeroVisual() {
     >
       <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-gradient-to-tr from-brand-200/70 via-white/10 to-cyan-200/60 blur-2xl sm:-inset-10" />
 
-      <div className="relative rotate-[1.5deg] rounded-[2rem] border border-white/70 bg-white/60 p-2.5 shadow-[0_40px_100px_-40px_rgba(15,23,42,0.55)] backdrop-blur-xl">
-        <div className="overflow-hidden rounded-[1.55rem] bg-ink">
+      <div className="relative rotate-[1.5deg] rounded-[2rem] border border-line bg-surface/60 p-2.5 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.75)] backdrop-blur-xl">
+        <div className="overflow-hidden rounded-[1.55rem] bg-night">
           <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
             <div className="flex gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-rose-400/80" />
@@ -95,7 +95,7 @@ export function HeroVisual() {
         </div>
       </div>
 
-      <div className="absolute -left-3 top-[18%] rounded-2xl border border-white/80 bg-white/95 px-4 py-3 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.4)] backdrop-blur animate-float sm:-left-8">
+      <div className="absolute -left-3 top-[18%] rounded-2xl border border-line bg-surface/95 px-4 py-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur animate-float sm:-left-8">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
           Không cần kinh nghiệm
         </p>
@@ -104,9 +104,9 @@ export function HeroVisual() {
         </p>
       </div>
 
-      <div className="absolute -right-2 bottom-[12%] rounded-2xl border border-white/80 bg-white/95 px-4 py-3 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.4)] backdrop-blur animate-float-delayed sm:-right-6">
+      <div className="absolute -right-2 bottom-[12%] rounded-2xl border border-line bg-surface/95 px-4 py-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur animate-float-delayed sm:-right-6">
         <div className="flex items-center gap-2">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
             <GraduationCap className="h-4 w-4" />
           </span>
           <div>

@@ -14,7 +14,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-ink text-slate-300">
+    <footer className="relative overflow-hidden bg-night text-slate-400">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(33,134,245,0.16),transparent_40%),radial-gradient(circle_at_90%_100%,rgba(20,184,166,0.1),transparent_45%)]"

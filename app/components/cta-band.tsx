@@ -16,7 +16,7 @@ export function CtaBand({
   return (
     <section className="pb-20 sm:pb-24">
       <Container>
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-ink px-6 py-16 text-center sm:px-12 sm:py-20">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-night px-6 py-16 text-center sm:px-12 sm:py-20">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(33,134,245,0.35),transparent_45%),radial-gradient(circle_at_85%_100%,rgba(20,184,166,0.22),transparent_45%)]"
@@ -30,7 +30,7 @@ export function CtaBand({
             <h2 className="mt-5 text-balance text-3xl font-semibold leading-[1.1] tracking-tight text-white sm:text-4xl lg:text-5xl">
               {title}
             </h2>
-            <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-slate-300 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-slate-400 sm:text-lg">
               {description}
             </p>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">

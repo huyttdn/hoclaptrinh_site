@@ -70,7 +70,7 @@ export function SiteHeader() {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-white/70 text-ink transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-surface/70 text-ink transition-colors hover:bg-surface-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-navigation"
             aria-label={open ? "Đóng menu" : "Mở menu"}

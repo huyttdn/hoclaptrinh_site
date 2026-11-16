@@ -6,7 +6,6 @@ import {
   Download,
   Lock,
   LogOut,
-  Picture,
   RefreshCw,
   Search,
   Trash,
@@ -20,13 +19,13 @@ import {
   deleteRegistration,
   listAllRegistrations,
   listRegistrations,
-  updateRegistrationAvatar,
   type Registration,
 } from "../lib/registrations";
 import {
-  createAvatarUrlMap,
-  removeAvatars,
-  uploadAvatar,
+  createAvatarUrl,
+  deleteAdminAvatar,
+  getAdminAvatarPath,
+  updateAdminAvatar,
   validateAvatarFile,
 } from "../lib/storage";
 import { getSupabase, isSupabaseConfigured } from "../lib/supabase";
@@ -52,8 +51,8 @@ export default function Admin() {
 function ConfigNotice() {
   return (
     <Container className="max-w-xl py-24">
-      <div className="rounded-[2rem] border border-amber-200 bg-amber-50 p-8 text-center">
-        <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+      <div className="rounded-[2rem] border border-amber-400/30 bg-amber-400/10 p-8 text-center">
+        <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-400/15 text-amber-300">
           <Lock className="h-6 w-6" />
         </span>
         <h1 className="mt-5 text-2xl font-semibold tracking-tight text-ink">
@@ -135,11 +134,11 @@ function LoginForm() {
   }
 
   const field =
-    "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-ink shadow-sm outline-none transition placeholder:text-slate-500 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10";
+    "w-full rounded-xl border border-slate-300 bg-surface px-4 py-3 text-sm text-ink shadow-sm outline-none transition placeholder:text-slate-500 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/10";
 
   return (
     <Container className="max-w-md py-16 sm:py-24">
-      <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_30px_80px_-50px_rgba(15,23,42,0.4)] sm:p-10">
+      <div className="rounded-[2rem] border border-slate-200 bg-surface p-8 shadow-[0_30px_80px_-50px_rgba(0,0,0,0.7)] sm:p-10">
         <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-700 ring-1 ring-brand-100">
           <Lock className="h-6 w-6" />
         </span>
@@ -193,7 +192,7 @@ function LoginForm() {
           {error ? (
             <p
               role="alert"
-              className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+              className="rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-300"
             >
               {error}
             </p>
@@ -202,7 +201,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-800 disabled:opacity-60"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-night px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10 disabled:opacity-60"
           >
             {status === "submitting" ? (
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
@@ -226,10 +225,6 @@ function Dashboard({ session }: { session: Session }) {
   const [confirmAll, setConfirmAll] = useState(false);
   const [deletingAll, setDeletingAll] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const [avatarUrls, setAvatarUrls] = useState<Record<string, string>>({});
-  const [uploadingId, setUploadingId] = useState<string | null>(null);
-  const [uploadTargetId, setUploadTargetId] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const totalPages = Math.max(1, Math.ceil(count / PAGE_SIZE));
 
@@ -243,11 +238,6 @@ function Dashboard({ session }: { session: Session }) {
       });
       setRows(result.rows);
       setCount(result.count);
-      try {
-        setAvatarUrls(await createAvatarUrlMap(result.rows));
-      } catch {
-        setAvatarUrls({});
-      }
     } catch (loadError) {
       setError(
         loadError instanceof Error
@@ -272,10 +262,6 @@ function Dashboard({ session }: { session: Session }) {
   async function handleDelete(id: string) {
     setBusyId(id);
     try {
-      const target = rows.find((row) => row.id === id);
-      if (target?.avatar_path) {
-        await removeAvatars([target.avatar_path]).catch(() => undefined);
-      }
       await deleteRegistration(id);
       setConfirmId(null);
       await load(page);
@@ -294,11 +280,6 @@ function Dashboard({ session }: { session: Session }) {
     setDeletingAll(true);
     setError("");
     try {
-      const all = await listAllRegistrations();
-      const paths = all
-        .map((row) => row.avatar_path)
-        .filter((path): path is string => Boolean(path));
-      await removeAvatars(paths).catch(() => undefined);
       await deleteAllRegistrations();
       setConfirmAll(false);
       setPage(1);
@@ -311,64 +292,6 @@ function Dashboard({ session }: { session: Session }) {
       );
     } finally {
       setDeletingAll(false);
-    }
-  }
-
-  function handleAvatarPick(id: string) {
-    setUploadTargetId(id);
-    fileInputRef.current?.click();
-  }
-
-  async function handleAvatarChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    event.target.value = "";
-    const id = uploadTargetId;
-    if (!file || !id) return;
-
-    const validationError = validateAvatarFile(file);
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
-
-    const target = rows.find((row) => row.id === id);
-    setUploadingId(id);
-    setError("");
-    try {
-      const path = await uploadAvatar(id, file);
-      await updateRegistrationAvatar(id, path);
-      if (target?.avatar_path) {
-        await removeAvatars([target.avatar_path]).catch(() => undefined);
-      }
-      await load(page);
-    } catch (uploadError) {
-      setError(
-        uploadError instanceof Error
-          ? uploadError.message
-          : "Không thể tải ảnh lên.",
-      );
-    } finally {
-      setUploadingId(null);
-      setUploadTargetId(null);
-    }
-  }
-
-  async function handleAvatarRemove(row: Registration) {
-    if (!row.avatar_path) return;
-    setBusyId(row.id);
-    setError("");
-    try {
-      await updateRegistrationAvatar(row.id, null);
-      await removeAvatars([row.avatar_path]).catch(() => undefined);
-      await load(page);
-    } catch (removeError) {
-      setError(
-        removeError instanceof Error
-          ? removeError.message
-          : "Không thể xóa ảnh.",
-      );
-    } finally {
-      setBusyId(null);
     }
   }
 
@@ -419,7 +342,7 @@ function Dashboard({ session }: { session: Session }) {
             type="button"
             onClick={() => void handleExport()}
             disabled={exporting || count === 0}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-slate-50 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-surface px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-slate-100 disabled:opacity-60"
           >
             {exporting ? (
               <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500" />
@@ -432,7 +355,7 @@ function Dashboard({ session }: { session: Session }) {
             type="button"
             onClick={() => setConfirmAll(true)}
             disabled={count === 0}
-            className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-semibold text-rose-700 transition-colors hover:bg-rose-100 disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-full border border-rose-400/30 bg-rose-400/10 px-4 py-2.5 text-sm font-semibold text-rose-300 transition-colors hover:bg-rose-400/20 disabled:opacity-60"
           >
             <Trash className="h-4 w-4" />
             Xóa tất cả
@@ -440,13 +363,15 @@ function Dashboard({ session }: { session: Session }) {
           <button
             type="button"
             onClick={() => void handleSignOut()}
-            className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-800"
+            className="inline-flex items-center gap-2 rounded-full bg-night px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
           >
             <LogOut className="h-4 w-4" />
             Đăng xuất
           </button>
         </div>
       </div>
+
+      <AdminAvatarCard session={session} />
 
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
         <StatCard
@@ -469,7 +394,7 @@ function Dashboard({ session }: { session: Session }) {
       {error ? (
         <p
           role="alert"
-          className="mt-6 flex items-center justify-between gap-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+          className="mt-6 flex items-center justify-between gap-4 rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-300"
         >
           {error}
           <button
@@ -482,25 +407,16 @@ function Dashboard({ session }: { session: Session }) {
         </p>
       ) : null}
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/png,image/jpeg,image/webp,image/gif"
-        className="hidden"
-        onChange={(event) => void handleAvatarChange(event)}
-      />
-
-      <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+      <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-surface">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[52rem] border-collapse text-left text-sm">
+          <table className="w-full min-w-[44rem] border-collapse text-left text-sm">
             <thead>
               <tr className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <th className="w-16 px-4 py-3 font-semibold">STT</th>
-                <th className="w-24 px-4 py-3 font-semibold">Ảnh</th>
                 <th className="px-4 py-3 font-semibold">Họ và tên</th>
                 <th className="px-4 py-3 font-semibold">Số điện thoại (Zalo)</th>
                 <th className="px-4 py-3 font-semibold">Thời gian đăng ký</th>
-                <th className="w-44 px-4 py-3 text-right font-semibold">
+                <th className="w-28 px-4 py-3 text-right font-semibold">
                   Thao tác
                 </th>
               </tr>
@@ -508,7 +424,7 @@ function Dashboard({ session }: { session: Session }) {
             <tbody className="divide-y divide-slate-100">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-16 text-center text-slate-500">
+                  <td colSpan={5} className="px-4 py-16 text-center text-slate-500">
                     <span className="inline-flex items-center gap-2">
                       <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500" />
                       Đang tải danh sách...
@@ -517,46 +433,15 @@ function Dashboard({ session }: { session: Session }) {
                 </tr>
               ) : rows.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-16 text-center text-slate-500">
-                    Chưa có học viên nào đăng ký. Khi có học viên, bạn có thể tải
-                    ảnh đại diện cho từng người ở cột <strong>Ảnh</strong>.
+                  <td colSpan={5} className="px-4 py-16 text-center text-slate-500">
+                    Chưa có học viên nào đăng ký.
                   </td>
                 </tr>
               ) : (
                 rows.map((row, index) => (
-                  <tr key={row.id} className="hover:bg-slate-50/70">
+                  <tr key={row.id} className="hover:bg-white/[0.03]">
                     <td className="px-4 py-3 tabular-nums text-slate-500">
                       {(page - 1) * PAGE_SIZE + index + 1}
-                    </td>
-                    <td className="px-4 py-3">
-                      <button
-                        type="button"
-                        onClick={() => handleAvatarPick(row.id)}
-                        disabled={uploadingId === row.id}
-                        aria-label={`Tải ảnh đại diện cho ${row.full_name}`}
-                        title={
-                          row.avatar_path ? "Thay ảnh đại diện" : "Tải ảnh đại diện"
-                        }
-                        className="group/avatar relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50 text-slate-400 transition-colors hover:border-brand-300 hover:text-brand-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 disabled:cursor-not-allowed"
-                      >
-                        {uploadingId === row.id ? (
-                          <span className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500" />
-                        ) : avatarUrls[row.id] ? (
-                          <img
-                            src={avatarUrls[row.id]}
-                            alt={`Ảnh đại diện của ${row.full_name}`}
-                            className="h-full w-full object-cover"
-                            loading="lazy"
-                          />
-                        ) : (
-                          <Picture className="h-5 w-5" />
-                        )}
-                        {uploadingId === row.id ? null : (
-                          <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-ink/55 text-white opacity-0 transition-opacity group-hover/avatar:opacity-100 group-focus-visible/avatar:opacity-100">
-                            <Upload className="h-4 w-4" />
-                          </span>
-                        )}
-                      </button>
                     </td>
                     <td className="px-4 py-3 font-medium text-ink">
                       {row.full_name}
@@ -594,35 +479,13 @@ function Dashboard({ session }: { session: Session }) {
                           </button>
                         </span>
                       ) : (
-                        <span className="flex items-center justify-end gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => handleAvatarPick(row.id)}
-                            disabled={uploadingId === row.id}
-                            aria-label={`Tải ảnh đại diện cho ${row.full_name}`}
-                            title={row.avatar_path ? "Thay ảnh" : "Tải ảnh"}
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 disabled:opacity-50"
-                          >
-                            <Upload className="h-4 w-4" />
-                          </button>
-                          {row.avatar_path ? (
-                            <button
-                              type="button"
-                              onClick={() => void handleAvatarRemove(row)}
-                              disabled={busyId === row.id}
-                              aria-label={`Xóa ảnh đại diện của ${row.full_name}`}
-                              title="Xóa ảnh"
-                              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-amber-200 hover:bg-amber-50 hover:text-amber-700 disabled:opacity-50"
-                            >
-                              <Picture className="h-4 w-4" />
-                            </button>
-                          ) : null}
+                        <span className="flex items-center justify-end">
                           <button
                             type="button"
                             onClick={() => setConfirmId(row.id)}
                             aria-label={`Xóa đăng ký của ${row.full_name}`}
                             title="Xóa đăng ký"
-                            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600"
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-rose-400/30 hover:bg-rose-400/10 hover:text-rose-300"
                           >
                             <Trash className="h-4 w-4" />
                           </button>
@@ -660,6 +523,163 @@ function Dashboard({ session }: { session: Session }) {
   );
 }
 
+function AdminAvatarCard({ session }: { session: Session }) {
+  const [path, setPath] = useState<string | null>(() =>
+    getAdminAvatarPath(session.user),
+  );
+  const [url, setUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(Boolean(path));
+  const [uploading, setUploading] = useState(false);
+  const [removing, setRemoving] = useState(false);
+  const [error, setError] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setPath(getAdminAvatarPath(session.user));
+  }, [session]);
+
+  useEffect(() => {
+    let active = true;
+    if (!path) {
+      setUrl(null);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    createAvatarUrl(path)
+      .then((signed) => {
+        if (active) setUrl(signed);
+      })
+      .catch(() => {
+        if (active) setUrl(null);
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [path]);
+
+  const email = session.user.email ?? "quản trị viên";
+  const initials = email.slice(0, 2).toUpperCase();
+
+  async function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+
+    const validationError = validateAvatarFile(file);
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setUploading(true);
+    setError("");
+    try {
+      const nextPath = await updateAdminAvatar(file);
+      setPath(nextPath);
+    } catch (uploadError) {
+      setError(
+        uploadError instanceof Error
+          ? uploadError.message
+          : "Không thể tải ảnh lên.",
+      );
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function handleRemove() {
+    setRemoving(true);
+    setError("");
+    try {
+      await deleteAdminAvatar();
+      setPath(null);
+    } catch (removeError) {
+      setError(
+        removeError instanceof Error
+          ? removeError.message
+          : "Không thể xóa ảnh.",
+      );
+    } finally {
+      setRemoving(false);
+    }
+  }
+
+  const busy = uploading || removing;
+
+  return (
+    <div className="mt-8 flex flex-col gap-5 rounded-2xl border border-slate-200 bg-surface p-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-center gap-4">
+        <span className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-slate-50 text-lg font-semibold text-slate-400">
+          {loading ? (
+            <span className="h-5 w-5 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500" />
+          ) : url ? (
+            <img
+              src={url}
+              alt="Ảnh đại diện quản trị"
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <span>{initials}</span>
+          )}
+        </span>
+        <div>
+          <p className="text-sm font-semibold text-ink">Ảnh đại diện quản trị</p>
+          <p className="mt-1 text-xs text-slate-500">
+            JPG, PNG, WEBP hoặc GIF · tối đa 2MB
+          </p>
+          {error ? (
+            <p role="alert" className="mt-1 text-xs font-medium text-rose-300">
+              {error}
+            </p>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/gif"
+          className="hidden"
+          onChange={(event) => void handleChange(event)}
+        />
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          disabled={busy}
+          className="inline-flex items-center gap-2 rounded-full bg-night px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10 disabled:opacity-60"
+        >
+          {uploading ? (
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+          ) : (
+            <Upload className="h-4 w-4" />
+          )}
+          {path ? "Đổi ảnh" : "Tải ảnh lên"}
+        </button>
+        {path ? (
+          <button
+            type="button"
+            onClick={() => void handleRemove()}
+            disabled={busy}
+            className="inline-flex items-center gap-2 rounded-full border border-rose-400/30 bg-rose-400/10 px-4 py-2.5 text-sm font-semibold text-rose-300 transition-colors hover:bg-rose-400/20 disabled:opacity-60"
+          >
+            {removing ? (
+              <span className="h-4 w-4 animate-spin rounded-full border-2 border-rose-300/30 border-t-rose-300" />
+            ) : (
+              <Trash className="h-4 w-4" />
+            )}
+            Xóa ảnh
+          </button>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 function StatCard({
   icon,
   label,
@@ -670,7 +690,7 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+    <div className="rounded-2xl border border-slate-200 bg-surface p-5">
       <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700 ring-1 ring-brand-100">
         {icon}
       </span>
@@ -732,7 +752,7 @@ function Pagination({
               aria-current={item === page ? "page" : undefined}
               className={`${base} ${
                 item === page
-                  ? "bg-ink text-white"
+                  ? "bg-night text-white"
                   : "border border-slate-300 text-slate-600 hover:bg-slate-100"
               }`}
             >
@@ -789,10 +809,10 @@ function ConfirmDialog({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 px-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm"
     >
-      <div className="w-full max-w-md rounded-[1.75rem] border border-slate-200 bg-white p-7 shadow-[0_40px_100px_-40px_rgba(15,23,42,0.6)]">
-        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-rose-50 text-rose-600">
+      <div className="w-full max-w-md rounded-[1.75rem] border border-slate-200 bg-surface p-7 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)]">
+        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-rose-400/15 text-rose-300">
           <Trash className="h-5 w-5" />
         </span>
         <h2 className="mt-5 text-xl font-semibold tracking-tight text-ink">

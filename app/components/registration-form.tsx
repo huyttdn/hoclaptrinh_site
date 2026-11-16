@@ -31,7 +31,7 @@ function validate(values: FormValues): FormErrors {
 }
 
 const fieldBase =
-  "w-full rounded-xl border bg-white px-4 py-3 text-sm text-ink shadow-sm outline-none transition placeholder:text-slate-500 focus:ring-4";
+  "w-full rounded-xl border bg-surface px-4 py-3 text-sm text-ink shadow-sm outline-none transition placeholder:text-slate-500 focus:ring-4";
 const fieldNormal =
   "border-slate-300 focus:border-brand-500 focus:ring-brand-500/10";
 const fieldInvalid =
@@ -111,11 +111,11 @@ export function RegistrationForm() {
   if (status === "success") {
     return (
       <div
-        className="flex min-h-[30rem] flex-col justify-center rounded-[2rem] border border-slate-200 bg-white p-8 shadow-[0_30px_80px_-50px_rgba(15,23,42,0.4)] sm:p-10"
+        className="flex min-h-[30rem] flex-col justify-center rounded-[2rem] border border-slate-200 bg-surface p-8 shadow-[0_30px_80px_-50px_rgba(0,0,0,0.7)] sm:p-10"
         role="status"
         aria-live="polite"
       >
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
           <CheckCircle className="h-7 w-7" />
         </span>
         <h2 className="mt-6 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
@@ -141,7 +141,7 @@ export function RegistrationForm() {
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_30px_80px_-50px_rgba(15,23,42,0.4)] sm:p-8 lg:p-10"
+      className="rounded-[2rem] border border-slate-200 bg-surface p-6 shadow-[0_30px_80px_-50px_rgba(0,0,0,0.7)] sm:p-8 lg:p-10"
     >
       <div className="grid gap-5">
         <div>
@@ -223,7 +223,7 @@ export function RegistrationForm() {
       {status === "error" ? (
         <p
           role="alert"
-          className="mt-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+          className="mt-5 rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-300"
         >
           {errorMessage}
         </p>

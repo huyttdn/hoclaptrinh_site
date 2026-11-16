@@ -175,7 +175,7 @@ function TopicsSection() {
             return (
               <article
                 key={topic.slug}
-                className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-[0_30px_70px_-50px_rgba(15,23,42,0.55)]"
+                className="group relative overflow-hidden rounded-[1.75rem] border border-slate-200 bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-[0_30px_70px_-50px_rgba(0,0,0,0.7)]"
               >
                 <div
                   aria-hidden="true"
@@ -223,7 +223,7 @@ function WhyUs() {
   return (
     <section
       id="vi-sao"
-      className="scroll-mt-24 border-y border-slate-900/5 bg-white py-16 sm:py-20 lg:py-24"
+      className="scroll-mt-24 border-y border-slate-900/5 bg-surface py-16 sm:py-20 lg:py-24"
     >
       <Container className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
@@ -249,9 +249,9 @@ function WhyUs() {
             return (
               <li
                 key={item.title}
-                className="rounded-2xl border border-slate-200 bg-paper/70 p-6 transition-colors hover:border-slate-300 hover:bg-white"
+                className="rounded-2xl border border-slate-200 bg-paper/70 p-6 transition-colors hover:border-slate-300 hover:bg-surface-2"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-brand-700 shadow-sm ring-1 ring-slate-200">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface text-brand-700 shadow-sm ring-1 ring-slate-200">
                   <Icon className="h-5 w-5" />
                 </span>
                 <h3 className="mt-4 text-base font-semibold tracking-tight text-ink">
@@ -271,7 +271,7 @@ function WhyUs() {
 
 function StatsBand() {
   return (
-    <section className="bg-white">
+    <section className="bg-surface">
       <Container>
         <dl className="grid grid-cols-2 gap-8 py-12 sm:grid-cols-4 sm:py-14">
           {stats.map((stat) => (

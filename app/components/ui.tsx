@@ -66,7 +66,7 @@ export function SectionHeading({
       {description ? (
         <p
           className={`mt-5 text-pretty text-base leading-7 sm:text-lg sm:leading-8 ${
-            tone === "dark" ? "text-slate-300" : "text-slate-600"
+            tone === "dark" ? "text-slate-400" : "text-slate-600"
           }`}
         >
           {description}
@@ -81,10 +81,10 @@ type ButtonSize = "sm" | "md" | "lg";
 
 const buttonVariants: Record<ButtonVariant, string> = {
   primary:
-    "bg-ink text-white shadow-[0_14px_34px_-18px_rgba(15,23,42,0.8)] hover:bg-slate-800",
+    "bg-night text-white shadow-[0_14px_34px_-18px_rgba(0,0,0,0.9)] hover:bg-white/10",
   secondary:
-    "border border-slate-300 bg-white/70 text-ink backdrop-blur hover:border-slate-400 hover:bg-white",
-  light: "bg-white text-ink hover:bg-slate-100",
+    "border border-slate-300 bg-surface/70 text-ink backdrop-blur hover:border-slate-400 hover:bg-surface-2",
+  light: "bg-surface text-ink hover:bg-surface-2",
   ghost: "text-ink hover:bg-slate-900/5",
 };
 

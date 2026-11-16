@@ -37,8 +37,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#0b1120" />
-        <meta name="color-scheme" content="light" />
+        <meta name="theme-color" content="#070b14" />
+        <meta name="color-scheme" content="dark" />
         <Meta />
         <Links />
       </head>
@@ -65,7 +65,7 @@ export default function App() {
     <div id="top" className="flex min-h-screen flex-col">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-night focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
       >
         Chuyển đến nội dung
       </a>
@@ -115,7 +115,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
           </Link>
         </div>
         {stack ? (
-          <pre className="mt-10 w-full overflow-x-auto rounded-2xl bg-slate-900 p-4 text-left text-xs text-slate-200">
+          <pre className="mt-10 w-full overflow-x-auto rounded-2xl bg-night p-4 text-left text-xs text-slate-400">
             <code>{stack}</code>
           </pre>
         ) : null}
