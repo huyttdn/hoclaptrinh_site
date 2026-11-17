@@ -156,7 +156,7 @@ export function RegistrationForm() {
             name="fullName"
             type="text"
             autoComplete="name"
-            placeholder="Enter your full name"
+            placeholder="Nhập họ và tên của bạn"
             value={values.fullName}
             onChange={handleChange}
             required
@@ -191,7 +191,7 @@ export function RegistrationForm() {
               type="tel"
               autoComplete="tel"
               inputMode="numeric"
-              placeholder="Enter your phone number"
+              placeholder="Nhập số điện thoại của bạn"
               value={values.phone}
               onChange={handleChange}
               required
