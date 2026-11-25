@@ -238,7 +238,11 @@ export function RegistrationForm() {
           type="submit"
           disabled={status === "submitting"}
           aria-busy={status === "submitting"}
-          className={buttonClass("primary", "md", "group/button shrink-0")}
+          className={buttonClass(
+            "accent",
+            "md",
+            "group/button shrink-0 sm:px-7 sm:py-3.5 sm:text-base",
+          )}
         >
           {status === "submitting" ? (
             <>

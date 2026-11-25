@@ -76,12 +76,14 @@ export function SectionHeading({
   );
 }
 
-type ButtonVariant = "primary" | "secondary" | "light" | "ghost";
+type ButtonVariant = "primary" | "accent" | "secondary" | "light" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
 const buttonVariants: Record<ButtonVariant, string> = {
   primary:
     "bg-night text-white shadow-[0_14px_34px_-18px_rgba(0,0,0,0.9)] hover:bg-white/10",
+  accent:
+    "bg-brand-500 text-white ring-1 ring-white/20 shadow-[0_18px_42px_-16px_rgba(33,134,245,0.9)] hover:bg-brand-400 focus-visible:outline-white",
   secondary:
     "border border-slate-300 bg-surface/70 text-ink backdrop-blur hover:border-slate-400 hover:bg-surface-2",
   light: "bg-surface text-ink hover:bg-surface-2",
