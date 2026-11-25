@@ -61,7 +61,7 @@ export function SiteHeader() {
           <div className="hidden items-center gap-3 lg:flex">
             <Link
               to="/#dang-ky"
-              className={buttonClass("primary", "sm", "group/button")}
+              className={buttonClass("accent", "sm", "group/button")}
             >
               Đăng ký học
               <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/button:translate-x-0.5" />
@@ -100,7 +100,7 @@ export function SiteHeader() {
             ))}
             <Link
               to="/#dang-ky"
-              className={buttonClass("primary", "md", "mt-3 w-full")}
+              className={buttonClass("accent", "md", "mt-3 w-full")}
               onClick={() => setOpen(false)}
             >
               Đăng ký học
